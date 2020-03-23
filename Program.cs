@@ -6,7 +6,7 @@ namespace battle_of_cards_grupauderzeniowa
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello to New Cart Game!");
         }
     }
 }
