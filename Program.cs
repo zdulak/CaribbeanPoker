@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace battle_of_cards_grupauderzeniowa
 {
@@ -6,7 +7,13 @@ namespace battle_of_cards_grupauderzeniowa
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello to New Cart Game!");
+            // testowanie
+            Deck talia = new Deck();
+            talia.Shuffle();
+            foreach (string item in talia.GetCardNames())
+            {
+                Console.WriteLine(item);
+            }
         }
     }
 }

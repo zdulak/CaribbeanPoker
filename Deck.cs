@@ -40,5 +40,14 @@ namespace battle_of_cards_grupauderzeniowa
             }
             cards = afterShuffle;
         }
+        public IEnumerable<string> GetCardNames()
+        {
+            string[]CardNames = new string[cards.Count];
+            for (int i = 0; i < cards.Count; i++)
+            {
+                CardNames[i] = cards[i].Name;
+            }
+            return CardNames;
+        }
     }
 }
