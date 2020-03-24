@@ -59,16 +59,17 @@ namespace battle_of_cards_grupauderzeniowa
             cards.Add(addedCard);
         }
         // metoda losująca pięć kart z przetasowanej talii
-        public Card[] handDeck()
+        public List<Card> handDeck()
         {
-            Card[] handStaff = new Card[5];
+            List<Card> handStaff = new List<Card>();
             for (int i = 0; i<5; i++)
             {
                 Card cardToPick =  cards[0];
                 cards.RemoveAt(0);
-                handStaff[i] = cardToPick;
+                handStaff.Add(cardToPick);
             }
             return handStaff;
         }
+        
     }
 }

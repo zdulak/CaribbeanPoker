@@ -10,20 +10,54 @@ namespace battle_of_cards_grupauderzeniowa
             // testowanie
             Deck talia = new Deck();
             talia.Shuffle();
-            Card[] dealerHand = new Card[5];
-            Card[] playerHand = new Card[5];
+            List<Card> dealerHand = new List<Card>();
+            List<Card> playerHand = new List<Card>();
+            
             dealerHand = talia.handDeck();
-            playerHand = talia.handDeck();
             Console.WriteLine("Dealer hand:");
             for (int i = 0; i < 5; i++)
             {
-                Console.Write(dealerHand[i].Name + " / ");
+                Console.Write(dealerHand[i].Name + " | ");
             }
             Console.WriteLine();
+            
+            dealerHand.Sort(new CardComparer_Value());
+            Console.WriteLine("Dealer hand sorted by value:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(dealerHand[i].Name + " | ");
+            }
+            Console.WriteLine();
+            
+            dealerHand.Sort(new CardComparer_Suits());
+            Console.WriteLine("Dealer hand sorted by suits:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(dealerHand[i].Name + " | ");
+            }
+            Console.WriteLine();
+            
+            playerHand = talia.handDeck();
             Console.WriteLine("Player hand:");
             for (int i = 0; i < 5; i++)
             {
-                Console.Write(playerHand[i].Name + " / ");
+                Console.Write(playerHand[i].Name + " | ");
+            }
+            Console.WriteLine();
+            
+            playerHand.Sort(new CardComparer_Value());
+            Console.WriteLine("Player hand sorted by value:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(playerHand[i].Name + " | ");
+            }
+            Console.WriteLine();
+
+            playerHand.Sort(new CardComparer_Suits());
+            Console.WriteLine("Player hand sorted by suits:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(playerHand[i].Name + " | ");
             }
             Console.WriteLine();
         }
