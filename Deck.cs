@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace battle_of_cards_grupauderzeniowa
 {
-    public class Deck
+    public class Deck: IDeckDAO
     {
         // fields
         private List<Card> cards;
@@ -27,7 +27,7 @@ namespace battle_of_cards_grupauderzeniowa
         {
             cards = new List<Card>(handCards);
         }
-        //methods
+        //methods working as
         public void Shuffle()
         {
             List<Card> afterShuffle = new List<Card>();
@@ -48,6 +48,14 @@ namespace battle_of_cards_grupauderzeniowa
                 CardNames[i] = cards[i].Name;
             }
             return CardNames;
+        }
+        public void removeCard(Card removedCard)
+        {
+            cards.Remove(removedCard);
+        }
+        public void addCard(Card addedCard)
+        {
+            cards.Add(addedCard);
         }
     }
 }
