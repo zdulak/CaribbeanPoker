@@ -44,7 +44,7 @@ namespace battle_of_cards_grupauderzeniowa
             Console.WriteLine("Player hand:");
             for (int i = 0; i < 5; i++)
             {
-                Console.Write(dealerHand[i].Name + " - " + dealerHand[i].Icon + " | ");
+                Console.Write(playerHand[i].Name + " - " + playerHand[i].Icon + " | ");
             }
             Console.WriteLine();
             
@@ -52,7 +52,7 @@ namespace battle_of_cards_grupauderzeniowa
             Console.WriteLine("Player hand sorted by value:");
             for (int i = 0; i < 5; i++)
             {
-                Console.Write(dealerHand[i].Name + " - " + dealerHand[i].Icon + " | ");
+                Console.Write(playerHand[i].Name + " - " + playerHand[i].Icon + " | ");
             }
             Console.WriteLine();
 
@@ -60,7 +60,7 @@ namespace battle_of_cards_grupauderzeniowa
             Console.WriteLine("Player hand sorted by suits:");
             for (int i = 0; i < 5; i++)
             {
-                Console.Write(dealerHand[i].Name + " - " + dealerHand[i].Icon + " | ");
+                Console.Write(playerHand[i].Name + " - " + playerHand[i].Icon + " | ");
             }
             Console.WriteLine();
             Console.WriteLine();
