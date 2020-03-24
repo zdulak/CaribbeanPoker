@@ -10,10 +10,22 @@ namespace battle_of_cards_grupauderzeniowa
             // testowanie
             Deck talia = new Deck();
             talia.Shuffle();
-            foreach (string item in talia.GetCardNames())
+            Card[] dealerHand = new Card[5];
+            Card[] playerHand = new Card[5];
+            dealerHand = talia.handDeck();
+            playerHand = talia.handDeck();
+            Console.WriteLine("Dealer hand:");
+            for (int i = 0; i < 5; i++)
             {
-                Console.WriteLine(item);
+                Console.Write(dealerHand[i].Name + " / ");
             }
+            Console.WriteLine();
+            Console.WriteLine("Player hand:");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(playerHand[i].Name + " / ");
+            }
+            Console.WriteLine();
         }
     }
 }
