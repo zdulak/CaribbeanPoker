@@ -80,6 +80,5 @@ namespace battle_of_cards_grupauderzeniowa
             }
             return handStaff;
         }
-        
     }
 }
