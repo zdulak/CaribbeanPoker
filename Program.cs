@@ -9,8 +9,12 @@ namespace battle_of_cards_grupauderzeniowa
         static void Main(string[] args)
         {
             // testowanie
-            byte ante = 20;
-            byte call = 40;
+            int ante = 20;
+            int call = 40;
+            int current = 940;
+            string result1 = "straight";
+            string result2 = "two pairs";
+
             Deck talia = new Deck();
             talia.Shuffle();
             List<Card> dealerHand = new List<Card>();
@@ -18,7 +22,7 @@ namespace battle_of_cards_grupauderzeniowa
             dealerHand = talia.handDeck();
             playerHand = talia.handDeck();
             //playerHand.Sort(new CardComparer_Value());
-            DisplayTable.DisplayBoard(dealerHand,playerHand, ante, call);
+            DisplayTable.DisplayBoard(dealerHand,playerHand, ante, call,current, result1, result2);
             
             /*Console.WriteLine("Dealer hand:");
             for (int i = 0; i < 5; i++)
