@@ -39,7 +39,9 @@ namespace battle_of_cards_grupauderzeniowa
             Console.WriteLine("       ANTE: " + a.ToString() + "$       CALL: " + c.ToString() + "$");
             Console.SetCursorPosition(2,10);
             Console.Write("            YOUR MONEY: " + cu.ToString()+"$");
-            Console.SetCursorPosition(2,15);
+            Console.SetCursorPosition(0,13);
+            Console.WriteLine("Would You like to play another game <Y/N>");
+            Console.ReadKey();
         }
     }
 }

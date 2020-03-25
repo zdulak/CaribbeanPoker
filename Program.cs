@@ -21,8 +21,8 @@ namespace battle_of_cards_grupauderzeniowa
             List<Card> playerHand = new List<Card>();
             dealerHand = talia.handDeck();
             playerHand = talia.handDeck();
-            //playerHand.Sort(new CardComparer_Value());
-            DisplayTable.DisplayBoard(dealerHand,playerHand, ante, call,current, result1, result2);
+            playerHand.Sort(new CardComparer_Value());
+            DisplayTable.DisplayBoard(dealerHand,playerHand, ante, call,current,result1, result2);
             
             /*Console.WriteLine("Dealer hand:");
             for (int i = 0; i < 5; i++)
