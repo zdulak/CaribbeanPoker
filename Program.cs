@@ -9,15 +9,18 @@ namespace battle_of_cards_grupauderzeniowa
         static void Main(string[] args)
         {
             // testowanie
+            byte ante = 20;
+            byte call = 40;
             Deck talia = new Deck();
             talia.Shuffle();
             List<Card> dealerHand = new List<Card>();
             List<Card> playerHand = new List<Card>();
-            
-            
-            
             dealerHand = talia.handDeck();
-            Console.WriteLine("Dealer hand:");
+            playerHand = talia.handDeck();
+            //playerHand.Sort(new CardComparer_Value());
+            DisplayTable.DisplayBoard(dealerHand,playerHand, ante, call);
+            
+            /*Console.WriteLine("Dealer hand:");
             for (int i = 0; i < 5; i++)
             {
                 Console.Write(dealerHand[i].Name + " - " + dealerHand[i].Icon + " | ");
@@ -63,7 +66,7 @@ namespace battle_of_cards_grupauderzeniowa
                 Console.Write(playerHand[i].Name + " - " + playerHand[i].Icon + " | ");
             }
             Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine();*/
         }
     }
 }
