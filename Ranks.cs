@@ -4,7 +4,7 @@ namespace battle_of_cards_grupauderzeniowa
 {
     public enum Ranks
     {
-        As = 1,
+        Ace = 1,
         Two = 2,
         Three = 3,
         Four = 4,
