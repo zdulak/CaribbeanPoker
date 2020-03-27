@@ -6,9 +6,18 @@ namespace battle_of_cards_grupauderzeniowa
 {
     public class DisplayTable
     { 
-        public static void DisplayBoard(List<Card> dealer, List<Card> player, int a, int c, int cu) 
+        public static void DisplayBoard(List<Card> dealer, List<Card> player, int a, int c, int cu, bool befcall) 
         {
-            var dealercomb = Analisis.HandAnalizer(dealer);
+            HandCombination dealercomb;
+            if (befcall)
+            {
+                dealercomb = HandCombination.cover;  
+            }
+            else
+            {
+                dealercomb = Analisis.HandAnalizer(dealer);
+            } 
+            
             var playercomb = Analisis.HandAnalizer(player);
             Console.Clear();
             Console.WriteLine("           ===  CASINO ROYAL ===");
@@ -37,11 +46,11 @@ namespace battle_of_cards_grupauderzeniowa
             }
             Console.Write(" -> " + playercomb.ToString());
             Console.SetCursorPosition(2,8);
-            Console.WriteLine("       ANTE: " + a.ToString() + "$       CALL: " + c.ToString() + "$");
+            Console.WriteLine("       ANTE: " + "$" + a.ToString() + "       CALL: $" + c.ToString());
             Console.SetCursorPosition(2,10);
-            Console.Write("            YOUR MONEY: " + cu.ToString()+"$");
+            Console.Write("            YOUR MONEY: $" + cu.ToString());
             Console.SetCursorPosition(0,13);
-            Console.WriteLine("Would You like to play another game <Y/N>");
+            Console.WriteLine("Would You like to CALL <Y/N>");
             Console.ReadKey();
         }
     }

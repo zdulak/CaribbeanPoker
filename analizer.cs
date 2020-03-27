@@ -5,7 +5,6 @@ namespace battle_of_cards_grupauderzeniowa
 {
     static class Analisis
     {
-        public enum HandCombination { nothing, pair, pairs, triplets, straight,flush, full, quads, poker, POKER}
         public static HandCombination HandAnalizer(List<Card> hand)
         {
             // find combination with the same color: flush, poker, POKER
