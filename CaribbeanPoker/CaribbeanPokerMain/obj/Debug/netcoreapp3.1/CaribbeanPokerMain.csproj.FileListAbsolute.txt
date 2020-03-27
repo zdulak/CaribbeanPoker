@@ -1,0 +1,4 @@
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.csprojAssemblyReference.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.csproj.CoreCompileInputs.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfoInputs.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfo.cs
