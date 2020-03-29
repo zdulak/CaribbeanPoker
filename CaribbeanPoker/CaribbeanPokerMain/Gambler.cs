@@ -8,24 +8,23 @@ namespace CaribbeanPokerMain
     {
         public int Money {get;set;}
         public Gambler() => Money = 1000;
-        public Gambler(Card[] cards): base(cards) => Money = 1000;
         public void Quit()
         {
             throw new System.NotImplementedException();
         }
-        public Ante getAnte()
+        public Ante GetAnte()
         {
             throw new System.NotImplementedException();
         }
-        public bool getJackpot()
+        public bool GetJackpot()
         {
             throw new System.NotImplementedException();
         }
-        public bool getCall()
+        public bool GetCall()
         {
             throw new System.NotImplementedException();
         }
-        public bool isBroken()
+        public bool IsBroke()
         {
             throw new System.NotImplementedException();
         }
