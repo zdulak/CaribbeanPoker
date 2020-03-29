@@ -34,10 +34,16 @@ namespace battle_of_cards_grupauderzeniowa
             // karta playera uporzadkowana
             playerHand.Sort(new CardComparer_Value());
             DisplayTable.DisplayBoard(dealerHandCover, playerHand, ante, call, current, beforeCall);
-            // call, ile
             Console.ReadKey();
             beforeCall = false;
             DisplayTable.DisplayBoard(dealerHand, playerHand, ante, call, current, beforeCall);
+            HandCombination dealer = Analisis.HandAnalizer(dealerHand);
+            HandCombination player = Analisis.HandAnalizer(playerHand);
+            Hand handpower = new Hand(dealer);
+            int outcome = handpower.CompareTo(player);
+            if (outcome == 1) Console.WriteLine("Dealer won");
+            else if (outcome == -1) Console.WriteLine ("You won");
+            else Console.WriteLine("remis");
             //rozliczenie i powrót do początku
         }
 
