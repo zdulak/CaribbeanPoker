@@ -33,8 +33,12 @@ namespace battle_of_cards_grupauderzeniowa
             playerHand = deck.handDeck();
             // karta playera uporzadkowana
             playerHand.Sort(new CardComparer_Value());
-            DisplayTable.DisplayBoard(dealerHandCover,playerHand, ante, call,current, beforeCall);
-            
+            DisplayTable.DisplayBoard(dealerHandCover, playerHand, ante, call, current, beforeCall);
+            // call, ile
+            Console.ReadKey();
+            beforeCall = false;
+            DisplayTable.DisplayBoard(dealerHand, playerHand, ante, call, current, beforeCall);
+            //rozliczenie i powrót do początku
         }
 
         public List<Card> Turn(List<Card> lc)
