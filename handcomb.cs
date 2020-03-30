@@ -5,7 +5,7 @@ namespace battle_of_cards_grupauderzeniowa
     public enum HandCombination 
     {cover,nothing, 
     pair_2, pair_3, pair_4, pair_5, pair_6, pair_7, pair_8, pair_9,pair_10, pair_J,pair_Q,pair_K,pair_A, 
-    pairs_2, pairs_3, pairs_4, pairs_5, pairs_6, pairs_7, pairs_8, pairs_9,pairs_10, pairs_J,pairs_Q,pairs_K,pairs_A,
+    dpair_2, dpair_3, dpairs_, dpair_5, dpair_6, dpair_7, dpair_8, dpairs_9,dpair_10, dpair_J,dpair_Q,dpair_K,dpair_A,
     triplets_2, triplets_3, triplets_4, triplets_5, triplets_6, triplets_7, triplets_8, triplets_9,triplets_10, triplets_J,triplets_Q,triplets_K,triplets_A, 
     straight_5, straight_6, straight_7, straight_8, straight_9, straight_10, straight_J, straight_Q,straight_K, straight_A,
     flush_6, flush_7, flush_8, flush_9,flush_10, flush_J,flush_Q,flush_K,flush_A, 

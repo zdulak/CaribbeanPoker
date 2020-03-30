@@ -50,8 +50,7 @@ namespace battle_of_cards_grupauderzeniowa
             Console.SetCursorPosition(2,10);
             Console.Write("            YOUR MONEY: $" + cu.ToString());
             Console.SetCursorPosition(0,13);
-            Console.WriteLine("Would You like to CALL <Y/N>");
-            Console.ReadKey();
+            
         }
     }
 }
