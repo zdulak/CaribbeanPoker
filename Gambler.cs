@@ -22,7 +22,7 @@ namespace battle_of_cards_grupauderzeniowa
         }
         public bool SetCall()
         {
-            Console.WriteLine("Would you like to CALL - press Y:");
+            Console.Write("Would you like to CALL - press Y: ");
             string choice1 = Console.ReadLine().ToUpper();
             if (choice1 == "Y") return true;
             return false;

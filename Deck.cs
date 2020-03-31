@@ -32,13 +32,6 @@ namespace battle_of_cards_grupauderzeniowa
                 }
             }
         }
-        // constructor to create "hand" przez przekazanie gotowej listy
-        public Deck(IEnumerable<Card> handCards)
-        {
-            cards = new List<Card>(handCards);
-        }
-        
-        //methods working as
         public void Shuffle()
         {
             List<Card> afterShuffle = new List<Card>();
@@ -71,14 +64,13 @@ namespace battle_of_cards_grupauderzeniowa
         // metoda losująca pięć kart z przetasowanej talii
         public List<Card> handDeck()
         {
-            List<Card> handStaff = new List<Card>();
-            for (int i = 0; i<5; i++)
+            List<Card> twohandStaff = new List<Card>();
+            for (int i = 0; i<10; i++)
             {
-                Card cardToPick =  cards[0];
-                cards.RemoveAt(0);
-                handStaff.Add(cardToPick);
+                Card cardToPick =  cards[i];
+                twohandStaff.Add(cardToPick);
             }
-            return handStaff;
+            return twohandStaff;
         }
     }
 }

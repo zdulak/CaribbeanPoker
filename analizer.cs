@@ -95,6 +95,7 @@ namespace battle_of_cards_grupauderzeniowa
                     {
                         lvalues.Add(item);
                     }
+                    
                     if (lvalues.Contains(4))
                     {
                         var myKey = mydict.FirstOrDefault(x=>x.Value == 4).Key;
@@ -149,27 +150,30 @@ namespace battle_of_cards_grupauderzeniowa
                     } 
                     if (lvalues.Contains(2))
                     {
-                        lvalues.Remove(2);
-                        if (lvalues.Contains(2))
+                        lvalues.Sort();
+                        lvalues.Reverse();
+                        if (lvalues[0]== lvalues[1])  //pairs
                         {
-                            Ranks myKey;
-                            var myKey1 = mydict.FirstOrDefault(x=> x.Value == 2).Key;
-                            mydict.Remove(myKey1);
-                            var myKey2 = mydict.FirstOrDefault(x=> x.Value == 2).Key;
-                            if (mydict[myKey1] > mydict[myKey2]) {myKey = myKey1;}
-                            else {myKey = myKey2;}
-                            if (myKey == Ranks.Ace) return HandCombination.pair_A;
-                            if (myKey == Ranks.King) return HandCombination.pair_K;
-                            if (myKey == Ranks.Queen) return HandCombination.pair_Q;
-                            if (myKey == Ranks.Jack) return HandCombination.pair_J;
-                            if (myKey == Ranks.Ten) return HandCombination.pair_10;
-                            if (myKey == Ranks.Nine) return HandCombination.pair_9;
-                            if (myKey == Ranks.Eight) return HandCombination.pair_8;
-                            if (myKey == Ranks.Seven) return HandCombination.pair_7;
-                            if (myKey == Ranks.Six) return HandCombination.pair_6;
-                            if (myKey == Ranks.Five) return HandCombination.pair_5;
-                            if (myKey == Ranks.Four) return HandCombination.pair_4;
-                            else return HandCombination.pair_3;
+                            Ranks myBigger = mydict.Keys.ElementAt(0);
+                            for (int i = 1; i<3;i++)
+                            {
+                                if (myBigger< mydict.Keys.ElementAt(i))
+                                {
+                                    myBigger = mydict.Keys.ElementAt(i);
+                                }
+                            }
+                            if (myBigger == Ranks.Ace) return HandCombination.dpair_A;
+                            if (myBigger == Ranks.King) return HandCombination.dpair_K;
+                            if (myBigger == Ranks.Queen) return HandCombination.dpair_Q;
+                            if (myBigger == Ranks.Jack) return HandCombination.dpair_J;
+                            if (myBigger == Ranks.Ten) return HandCombination.dpair_10;
+                            if (myBigger == Ranks.Nine) return HandCombination.dpair_9;
+                            if (myBigger == Ranks.Eight) return HandCombination.dpair_8;
+                            if (myBigger == Ranks.Seven) return HandCombination.dpair_7;
+                            if (myBigger == Ranks.Six) return HandCombination.dpair_6;
+                            if (myBigger == Ranks.Five) return HandCombination.dpair_5;
+                            if (myBigger == Ranks.Four) return HandCombination.dpair_4;
+                            else return HandCombination.dpair_3;
                         } 
                         else 
                         {

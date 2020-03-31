@@ -7,36 +7,39 @@ namespace battle_of_cards_grupauderzeniowa
     class Game
     {
         private Deck deck = new Deck();
-        private Gambler gambler = new Gambler(980);
+        private Gambler gambler = new Gambler(250);
         public void Run()
         {
+            int ante = 20;
             bool anothergame = true;
             while(anothergame)
             {
-                
                 // utworzenie potasowanej talii 52 kart
                 deck.Shuffle();
                 // utworzenie dwóch "rąk"
                 List <Card> dealerHand = new List<Card>();
                 List<Card> playerHand = new List<Card>();
-                dealerHand = deck.handDeck();
+                List<Card> twoHAND = new List<Card>();
+                twoHAND = deck.handDeck();
+                for (int i = 0; i < 10; i++)
+                {
+                    if (i<5) dealerHand.Add(twoHAND[i]);
+                    else playerHand.Add(twoHAND[i]);
+                }
                 List<Card> dealerHandCover = Turn(dealerHand);
-                playerHand = deck.handDeck();
                 // karta playera uporzadkowana
                 playerHand.Sort(new CardComparer_Value());
+                //plansza przed Call ale juz z Ante
                 bool beforeCall = true;
-                int current= gambler.GetMoney();         
-            
-                DisplayTable.DisplayBoard(dealerHandCover, playerHand, 20, 0, current, beforeCall);
+                      
+                gambler.SetMoney(gambler.GetMoney()-ante);
+                DisplayTable.DisplayBoard(dealerHandCover, playerHand, ante, 0, gambler.GetMoney(), beforeCall);
                 bool setcal = gambler.SetCall();
                 if (setcal) 
                 {
                     beforeCall = false;
-                    gambler.SetMoney(current-40);
-                    gambler.GetMoney();
-                    DisplayTable.DisplayBoard(dealerHand, playerHand, 20, 40, current, beforeCall);
-                    Console.WriteLine("Press any key");
-                    Console.ReadKey();
+                    gambler.SetMoney(gambler.GetMoney()- 2* ante);
+                    DisplayTable.DisplayBoard(dealerHand, playerHand, ante, 2*ante, gambler.GetMoney(), beforeCall);
                     HandCombination dealer = Analisis.HandAnalizer(dealerHand);
                     HandCombination player = Analisis.HandAnalizer(playerHand);
                     // sprawdzenie czy ręka delera kwlifikuje sie do porównania
@@ -47,29 +50,31 @@ namespace battle_of_cards_grupauderzeniowa
                         if (outcome == 1)
                         {
                             Console.WriteLine("You lost 60$");
-                            gambler.SetMoney(current-20);
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
                         } 
                         if(outcome == -1) 
                         {
-                            Console.WriteLine ("You won aggregate money!!!");
+                            Console.WriteLine("You won aggregate money!!!");
+                            Console.WriteLine("Press any key");
                             int agregate = 1;
                             string generalhand = player.ToString().Substring(0,2);
                             if (generalhand == "PO") {agregate = 100;}
                             if (generalhand == "po") {agregate = 50;}
-                            if (generalhand == "qu") {agregate = 100;}
-                            if (generalhand == "fu") {agregate = 100;}
-                            if (generalhand == "fl") {agregate = 100;}
-                            if (generalhand == "st") {agregate = 100;}
-                            if (generalhand == "tr") {agregate = 100;}
-                            if (generalhand == "dp") {agregate = 100;}
-                            gambler.SetMoney(current + agregate * 40);
-
-
+                            if (generalhand == "qu") {agregate = 20;}
+                            if (generalhand == "fu") {agregate = 7;}
+                            if (generalhand == "fl") {agregate = 5;}
+                            if (generalhand == "st") {agregate = 4;}
+                            if (generalhand == "tr") {agregate = 3;}
+                            if (generalhand == "dp") {agregate = 2;}
+                            gambler.SetMoney(gambler.GetMoney() + agregate*3*ante +2* ante);
                         }
                         if(outcome == 0) 
                         {
                             Console.WriteLine("draw, get back Call");
-                            gambler.SetMoney(current+40);
+                            Console.WriteLine("Press any key");
+                            Console.ReadKey();
+                            gambler.SetMoney(gambler.GetMoney()+ 2*ante);
                         }
                     }
                     else   //dealer: nothing
@@ -83,36 +88,44 @@ namespace battle_of_cards_grupauderzeniowa
                                 if (outcome == 1)
                                 {
                                     Console.WriteLine("Dealer won, you lost 60$");
-                                    gambler.SetMoney(current - 60);
+                                    Console.WriteLine("Press any key");
+                                    Console.ReadKey();
+                                    gambler.SetMoney(gambler.GetMoney() - 3*ante);
                                     break;
                                 } 
                                 if(outcome == -1) 
                                 {
                                     Console.WriteLine ("You won aggregate money!!!");
+                                    Console.WriteLine("Press any key");
+                                    Console.ReadKey();
                                     int agregate = 1;
                                     string generalhand = player.ToString().Substring(0,2);
                                     if (generalhand == "PO") {agregate = 100;}
                                     if (generalhand == "po") {agregate = 50;}
-                                    if (generalhand == "qu") {agregate = 100;}
-                                    if (generalhand == "fu") {agregate = 100;}
-                                    if (generalhand == "fl") {agregate = 100;}
-                                    if (generalhand == "st") {agregate = 100;}
-                                    if (generalhand == "tr") {agregate = 100;}
-                                    if (generalhand == "dp") {agregate = 100;}
-                                    gambler.SetMoney(current + agregate * 40);
+                                    if (generalhand == "qu") {agregate = 20;}
+                                    if (generalhand == "fu") {agregate = 7;}
+                                    if (generalhand == "fl") {agregate = 5;}
+                                    if (generalhand == "st") {agregate = 4;}
+                                    if (generalhand == "tr") {agregate = 3;}
+                                    if (generalhand == "dp") {agregate = 2;}
+                                    gambler.SetMoney(gambler.GetMoney() + agregate*3*ante + 2*ante);
                                     break;
                                 }
                                 if(outcome == 0) 
                                 {
                                     Console.WriteLine("draw, get back Call");
-                                    gambler.SetMoney(current+40);
+                                    Console.WriteLine("Press any key");
+                                    Console.ReadKey();
+                                    gambler.SetMoney(gambler.GetMoney()+2*ante);
                                 }
                                 break;
                             }
                             else
                             {
                                 Console.WriteLine("You won 60 $");
-                                gambler.SetMoney(current + 60);
+                                Console.WriteLine("Press any key");
+                                Console.ReadKey();
+                                gambler.SetMoney(gambler.GetMoney() + 5*ante);
                                 break;
                             }
                         }
@@ -120,8 +133,7 @@ namespace battle_of_cards_grupauderzeniowa
                 }
                 else
                 {
-                    DisplayTable.DisplayBoard(dealerHandCover, playerHand, 200, 0, current, beforeCall);
-                    Console.WriteLine("Would you like to play? - press Y:");
+                    Console.Write("Would you like to play? - press Y: ");
                     string choice2 = Console.ReadLine().ToUpper();
                     if (choice2 != "Y")
                     {
@@ -134,7 +146,7 @@ namespace battle_of_cards_grupauderzeniowa
                     anothergame = false; 
                 } 
             } 
-            Console.WriteLine("End of the Game");
+            Console.WriteLine("End of the Game. You lost all your money");
         }
 
         public List<Card> Turn(List<Card> lc)
