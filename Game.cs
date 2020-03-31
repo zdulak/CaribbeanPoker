@@ -52,6 +52,7 @@ namespace battle_of_cards_grupauderzeniowa
                             Console.WriteLine("You lost 60$");
                             Console.WriteLine("Press any key");
                             Console.ReadKey();
+                            gambler.SetMoney(gambler.GetMoney() - 3 * ante);
                         } 
                         if(outcome == -1) 
                         {
@@ -108,7 +109,7 @@ namespace battle_of_cards_grupauderzeniowa
                                     if (generalhand == "st") {agregate = 4;}
                                     if (generalhand == "tr") {agregate = 3;}
                                     if (generalhand == "dp") {agregate = 2;}
-                                    gambler.SetMoney(gambler.GetMoney() + agregate*3*ante + 2*ante);
+                                    gambler.SetMoney(gambler.GetMoney() + agregate*3*ante + 3*ante);
                                     break;
                                 }
                                 if(outcome == 0) 
@@ -117,15 +118,16 @@ namespace battle_of_cards_grupauderzeniowa
                                     Console.WriteLine("Press any key");
                                     Console.ReadKey();
                                     gambler.SetMoney(gambler.GetMoney()+2*ante);
+                                    break;
                                 }
-                                break;
+                                
                             }
                             else
                             {
-                                Console.WriteLine("You won 60 $");
+                                Console.WriteLine("You get back your Ante & Call plus extra Ante");
                                 Console.WriteLine("Press any key");
                                 Console.ReadKey();
-                                gambler.SetMoney(gambler.GetMoney() + 5*ante);
+                                gambler.SetMoney(gambler.GetMoney() + 4 *ante);
                                 break;
                             }
                         }
@@ -140,7 +142,7 @@ namespace battle_of_cards_grupauderzeniowa
                         anothergame = false;
                     } 
                 }
-                beforeCall = true;
+                //beforeCall = true;
                 if (gambler.GetMoney()<= 0)
                 {
                     anothergame = false; 
