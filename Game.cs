@@ -118,8 +118,9 @@ namespace battle_of_cards_grupauderzeniowa
                                     Console.WriteLine("Press any key");
                                     Console.ReadKey();
                                     gambler.SetMoney(gambler.GetMoney()+2*ante);
+                                    break;
                                 }
-                                break;
+                                
                             }
                             else
                             {
@@ -141,7 +142,7 @@ namespace battle_of_cards_grupauderzeniowa
                         anothergame = false;
                     } 
                 }
-                beforeCall = true;
+                //beforeCall = true;
                 if (gambler.GetMoney()<= 0)
                 {
                     anothergame = false; 
