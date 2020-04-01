@@ -20,17 +20,17 @@ namespace CaribbeanPokerMain
         }
         public Card GetCard(Suit suit, Rank rank)
         {
-            var picture = cardsDatabase[(int)rank+(int)suit*(int)rank-1];
+            var picture = cardsDatabase[(int)rank-2+(int)suit*13];
             return new Card(suit, rank, picture: picture);
         }
         public List<Card> GetAllCards()
         {
-            var cards = new List<Card>(52);
+            var cards = new List<Card>();
             for (int suit = 0; suit < 4; ++suit)
             {
-                for (int rank = 1; rank < 14; ++rank)
+                for (int rank = 2; rank < 15; ++rank)
                 {
-                    cards[rank+suit*rank-1] = GetCard((Suit)suit, (Rank)rank);
+                    cards.Add(GetCard((Suit)suit, (Rank)rank));
                 }
             }
             return cards;

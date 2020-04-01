@@ -45,28 +45,28 @@ namespace CaribbeanPokerMain
                     gambler.Money -= 2*(int)ante;
                     dealer.FlipCards(dealer.Cards.Length);
                     View.DisplayBoard(dealer.Cards, gambler.Cards);
-                    if (dealer.IsQualify())
+                    if (true)
                     {
                         if (gambler > dealer)
                         {
-                            View.PrintMsg("You win!");
-                            var rank = gambler.HandRank();
+                            Console.WriteLine("You win!");
+                            var handCombination = gambler.GetHandCombination();
                             gambler.Money += 2*(int)ante;
-                            gambler.Money += RankMoney(rank, ante, isJackpot);
+                            gambler.Money += RankMoney(handCombination, ante, isJackpot);
                         }
                         else if (dealer == gambler)
                         {
-                            View.PrintMsg("Push!");
+                            Console.WriteLine("Push!");
                             gambler.Money += 3*(int)ante;
                         }
                         else
                         {
-                            View.PrintMsg("You lose!");
+                            Console.WriteLine("You lose!");
                         }
                     }
                     else
                     {
-                        View.PrintMsg("Dealer folds!");
+                        Console.WriteLine("Dealer folds!");
                         gambler.Money += 4*(int)ante;
                     }
                 }
@@ -74,74 +74,56 @@ namespace CaribbeanPokerMain
                 deck.EnqueueHand(dealer.Cards);
                 deck.Shuffle();
             }
-            View.PrintMsg("You are broke. Goodbye!");
+            Console.WriteLine("You are broke. Goodbye!");
             gambler.Quit();         
         }
-        private int RankMoney(int rank, Ante ante, bool isJackpot)
+        private int RankMoney(HandCombination rank, Ante ante, bool isJackpot)
         {
             int money = 2*(int)ante; // bet money
             switch (rank)
             {
-                case 1:
+                case HandCombination.nothing:
                     money *= 1;
                     break;
-                case 2:
-                    money *= 1;
-                    break;
-                case 3:
-                    money *= 2;
-                    break;
-                case 4:
-                    money *= 3;
-                    break;
-                case 5:
-                    money *= 4;
-                    break;
-                case 6:
-                    money *= 5;
-                    break;
-                case 7:
+                case HandCombination.full:
                     money *= 7;
                     break;
-                case 8:
+                case HandCombination.quads:
                     money *= 20;
                     break;
-                case 9:
+                case HandCombination.straight_flush:
                     money *= 50;
                     break;
-                case 10:
+                case HandCombination.royal_flush:
                     money *= 100;
                     break;
                 default:
-                    money = 0;
+                    money *= ((int)rank-1);
                     break;
             }
-            if (isJackpot && rank > 5)
+            if (isJackpot && (int)rank > 5)
             {
                 switch (rank)
                 {
-                    case 6:
+                    case HandCombination.flush:
                         money += 5*JackpotAnte;
                         jackpot -= 5*JackpotAnte;
                         break;
-                    case 7:
+                    case HandCombination.full:
                         money += 10*JackpotAnte;
                         jackpot -= 10*JackpotAnte;
                         break;
-                    case 8:
+                    case HandCombination.quads:
                         money += 50*JackpotAnte;
                         jackpot -= 50*JackpotAnte;
                         break;
-                    case 9:
+                    case HandCombination.straight_flush:
                         money += (int)(0.1*jackpot);
                         jackpot -= (int)(0.1*jackpot);
                         break;
-                    case 10:
+                    case HandCombination.royal_flush:
                         money += jackpot;
                         jackpot = 0;
-                        break;
-                    default:
-                        money = 0;
                         break;
                 }
                 if (jackpot < 0.5*JackpotDefault) jackpot = JackpotDefault;

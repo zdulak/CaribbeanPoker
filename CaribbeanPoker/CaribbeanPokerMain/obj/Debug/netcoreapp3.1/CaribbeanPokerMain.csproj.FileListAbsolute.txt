@@ -2,3 +2,16 @@ G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\Caribbea
 G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.csproj.CoreCompileInputs.cache
 G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfoInputs.cache
 G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfo.cs
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.exe
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.deps.json
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.runtimeconfig.json
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.runtimeconfig.dev.json
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.dll
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\bin\Debug\netcoreapp3.1\CaribbeanPokerMain.pdb
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.csprojAssemblyReference.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.csproj.CoreCompileInputs.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfoInputs.cache
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.AssemblyInfo.cs
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.dll
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.pdb
+G:\codecool\c#_codecool\battle-of-cards-grupauderzeniowa — develop2\battle-of-cards-grupauderzeniowa\CaribbeanPoker\CaribbeanPokerMain\obj\Debug\netcoreapp3.1\CaribbeanPokerMain.genruntimeconfig.cache

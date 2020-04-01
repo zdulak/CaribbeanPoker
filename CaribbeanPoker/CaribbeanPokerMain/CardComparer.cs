@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace CaribbeanPokerMain
@@ -18,9 +19,9 @@ namespace CaribbeanPokerMain
                 case CompareBy.Suit:
                     return x.Suit.CompareTo(y.Suit);
                 case CompareBy.Rank:
-                    return x.Rank.CompareTo(y.Rank);
+                    return -x.Rank.CompareTo(y.Rank); // Sort in descending order
                 default:
-                    return x.Rank.CompareTo(y.Rank);
+                    throw new ArgumentException("Wrong type to comparison.");
             } 
         }
     }

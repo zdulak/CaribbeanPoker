@@ -8,6 +8,7 @@ namespace CaribbeanPokerMain
         {
             Game game = new Game();
             game.Run();
+            
         }
     }
 }

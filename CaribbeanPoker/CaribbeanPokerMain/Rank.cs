@@ -2,9 +2,9 @@ using System;
 
 namespace CaribbeanPokerMain
 {
-    enum Rank
+    public enum Rank
     {
-        As = 1,
+
         Two = 2,
         Three = 3,
         Four = 4,
@@ -16,6 +16,7 @@ namespace CaribbeanPokerMain
         Ten = 10,
         Jack = 11,
         Queen = 12,
-        King = 13
+        King = 13,
+        As = 14
     }
 }
