@@ -112,7 +112,7 @@ namespace CaribbeanPokerMain
                 Array.Sort(SortedCards, (x,y) => -x.Rank.CompareTo(y.Rank)); // Sort cards in descending order;
             }
         }
-        //  // Method sorts cards first by ranks and then by suits.
+        // // Method sorts cards first by ranks and then by suits.
         // public void Sort()
         // {
         //     var cardComparer = new CardComparer(CardComparer.CompareBy.Rank);
