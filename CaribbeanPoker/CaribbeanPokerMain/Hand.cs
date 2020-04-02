@@ -6,71 +6,74 @@ namespace CaribbeanPokerMain
 {
     class Hand : IComparable<Hand>, IEquatable<Hand>
     {
-        public Card[] Cards {get; set;}
-        // Method flips first n cards  
-        public void FlipCards(int number)
+        private Card[] _cards;
+        private Card[] _sortedCards;
+        public Card[] Cards 
         {
-            for (int i = 0; i < number; ++i) Cards[i].FaceUp = true;
-        }
-        // Method sorts cards first by ranks and then by suits.
-        public void Sort()
-        {
-            var cardComparer = new CardComparer(CardComparer.CompareBy.Rank);
-            Array.Sort(Cards, cardComparer);
-            cardComparer.CompareField = CardComparer.CompareBy.Suit;
-            Array.Sort(Cards, cardComparer);
-        }
-        public int CompareTo(Hand other)
-        {
-            var thisHandCombination = GetHandCombination();
-            var otherHandCombination = other.GetHandCombination();
-            if (thisHandCombination != otherHandCombination)
+            get => _cards;
+            set
             {
-               return thisHandCombination.CompareTo(otherHandCombination); 
+                _cards = value;
+                // Sort cards first by the size of the groups of identical ranks and then by ranks.
+                _sortedCards = GroupByRank().OrderByDescending(x => x.Count())
+                    .ThenByDescending(x => x.Key).SelectMany(x => x).ToArray();
+                // If we have the lowest straight this method exchanges the Ace for the low_Ace.
+                AceExchange();
+            }
+        }
+        public Card[] SortedCards => _sortedCards;
+        // Method flips the first n cards  
+        public void FlipCards(int number, bool sorted)
+        {
+            if (sorted)
+            {
+                for (int i = 0; i < number; ++i) SortedCards[i].FaceUp = !SortedCards[i].FaceUp;
             }
             else
             {
-                return EqualCombinationComparer(thisHandCombination, other);
+                for (int i = 0; i < number; ++i) Cards[i].FaceUp = !Cards[i].FaceUp;;
             }
+            
         }
-        public bool Equals(Hand other) => CompareTo(other) == 0 ? true: false;
-        private bool IsStraight()
+        public int CompareTo(Hand other)
         {
-            var lowestStraight = new Rank[] {Rank.As, Rank.Five, Rank.Four, Rank.Three, Rank.Two};
-            if (Cards.Select(x => x.Rank).SequenceEqual(lowestStraight)) return true;
-            for (int i = 0; i < Cards.Length - 1; ++i)
+            var thisCombination = GetHandCombination();
+            var otherCombination = other.GetHandCombination();
+            if (thisCombination != otherCombination)
             {
-                if (Cards[i+1].Rank + 1 != Cards[i].Rank) return false;
+               return thisCombination.CompareTo(otherCombination); 
             }
-            return true;
+            else
+            {
+                return CompareByRanks(other);
+            }
         }
-        public static bool operator > (Hand op1, Hand op2)
+        public bool Equals(Hand other) => CompareTo(other) == 0;
+        public override bool Equals(object other)
         {
-            return op1.CompareTo(op2) == 1;
+             // Check for null and compare run-time types.
+            if ((other == null) || !this.GetType().Equals(other.GetType())) 
+            {
+                return false;
+            }
+            else
+            {
+                return Equals((Hand)other);
+            }
         }
-        public static bool operator < (Hand op1, Hand op2)
-        {
-            return op1.CompareTo(op2) == -1;
-        }
-        public static bool operator != (Hand op1, Hand op2)
-        {
-            return op1.Equals(op2);
-        }
-        public static bool operator == (Hand op1, Hand op2)
-        {
-            return op1.Equals(op2);
-        }
-        private IEnumerable<IGrouping<Rank, Card>> GroupByRank() => Cards.GroupBy(x => x.Rank);
-
+        public static bool operator > (Hand op1, Hand op2) => op1.CompareTo(op2) == 1;
+        public static bool operator < (Hand op1, Hand op2) => op1.CompareTo(op2) == -1;
+        public static bool operator != (Hand op1, Hand op2) => !op1.Equals(op2);
+        public static bool operator == (Hand op1, Hand op2) => op1.Equals(op2);
+        public override int GetHashCode() => SortedCards.Aggregate<Card, int>(1, (x, y) => x.GetHashCode() ^ y.GetHashCode());
         public HandCombination GetHandCombination()
         {
-            Sort();
             var isStraight = IsStraight();
             var groupsByRank = GroupByRank();
-            var isFlush = Cards.All(x => x.Suit == Cards.First().Suit);
+            var isFlush = SortedCards.All(x => x.Suit == SortedCards.First().Suit);
             var isTriplets = groupsByRank.Any(x => x.Count() == 3);
             var isPair = groupsByRank.Any(x => x.Count() == 2);
-            if (isFlush && isStraight && Cards[0].Rank == Rank.As) return HandCombination.royal_flush;
+            if (isFlush && isStraight && SortedCards[0].Rank == Rank.Ace) return HandCombination.royal_flush;
             if (isFlush && isStraight ) return HandCombination.straight_flush;
             if (groupsByRank.Any(x => x.Count() == 4)) return HandCombination.quads;
             if (isTriplets && isPair) return HandCombination.full;
@@ -81,30 +84,41 @@ namespace CaribbeanPokerMain
             if (isPair) return HandCombination.pair;
             return HandCombination.nothing;
         }
-        private int EqualCombinationComparer(HandCombination handCombination, Hand other)
+        private int CompareByRanks(Hand other)
         {
-            if (handCombination == HandCombination.royal_flush 
-                || handCombination == HandCombination.straight_flush
-                || handCombination == HandCombination.straight)
+            var pairsCards = SortedCards.Zip(other.SortedCards, (x,y) => (x,y));
+            foreach (var pair in pairsCards)
             {
-                return Cards[0].Rank.CompareTo(other.Cards[0].Rank);   
-            }
-            else
-            {
-                return CompareByGroups(other);
-            }
-        }
-        private int CompareByGroups(Hand other)
-        {
-            var thisGroups = GroupByRank().OrderByDescending(x => x.Count()).ThenByDescending(x => x.Key);
-            var otherGroups = other.GroupByRank().OrderByDescending(x => x.Count()).ThenByDescending(x => x.Key);
-            var pairsGroups = thisGroups.Zip(otherGroups, (x,y) => (x,y));
-            foreach (var pair in pairsGroups)
-            {
-                if (pair.x.Key > pair.y.Key) return 1;
-                if (pair.x.Key < pair.y.Key) return -1;
+                if (pair.x.Rank > pair.y.Rank) return 1;
+                if (pair.x.Rank < pair.y.Rank) return -1;
             }
             return 0;
         }
+        private IEnumerable<IGrouping<Rank, Card>> GroupByRank() => Cards.GroupBy(x => x.Rank);
+        private bool IsStraight()
+        {
+            for (int i = 0; i < SortedCards.Length - 1; ++i)
+            {
+                if (SortedCards[i+1].Rank + 1 != SortedCards[i].Rank) return false;
+            }
+            return true;
+        }
+        private void AceExchange()
+        {
+            var lowestStraight = new Rank[] {Rank.Ace, Rank.Five, Rank.Four, Rank.Three, Rank.Two};
+            if (SortedCards.Select(x => x.Rank).SequenceEqual(lowestStraight))
+            {
+                SortedCards[0] = new Card(SortedCards[0].Suit, Rank.low_Ace, SortedCards[0].FaceUp, SortedCards[0].Picture);
+                Array.Sort(SortedCards, (x,y) => -x.Rank.CompareTo(y.Rank)); // Sort cards in descending order;
+            }
+        }
+        //  // Method sorts cards first by ranks and then by suits.
+        // public void Sort()
+        // {
+        //     var cardComparer = new CardComparer(CardComparer.CompareBy.Rank);
+        //     Array.Sort(SortedCards, cardComparer);
+        //     cardComparer.CompareField = CardComparer.CompareBy.Suit;
+        //     Array.Sort(SortedCards, cardComparer);
+        // }
     } 
 }

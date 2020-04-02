@@ -4,7 +4,7 @@ namespace CaribbeanPokerMain
 {
     public enum Rank
     {
-
+        low_Ace = 1,
         Two = 2,
         Three = 3,
         Four = 4,
@@ -17,6 +17,6 @@ namespace CaribbeanPokerMain
         Jack = 11,
         Queen = 12,
         King = 13,
-        As = 14
+        Ace = 14
     }
 }
