@@ -34,39 +34,37 @@ namespace CaribbeanPokerMain
                     gambler.Money -= (int)JackpotAnte;
                 }
                 gambler.Cards = deck.DequeueHand();
-                gambler.Sort();
-                gambler.FlipCards(gambler.Cards.Length);
+                gambler.FlipCards(gambler.Cards.Length, sorted: true);
                 dealer.Cards = deck.DequeueHand();
-                dealer.FlipCards(1); // Reveal the dealer's first card    
-                View.DisplayBoard(dealer.Cards, gambler.Cards);
-                dealer.Sort();
+                dealer.FlipCards(1, sorted: false); // Reveal the dealer's first card 
+                View.DisplayBoard(dealer.Cards, gambler.SortedCards);
                 if (gambler.GetCall())
                 {
                     gambler.Money -= 2*(int)ante;
-                    dealer.FlipCards(dealer.Cards.Length);
+                    dealer.FlipCards(dealer.Cards.Length, sorted: true);
                     View.DisplayBoard(dealer.Cards, gambler.Cards);
-                    if (true)
+                    if (dealer.IsQualify())
                     {
                         if (gambler > dealer)
                         {
-                            Console.WriteLine("You win!");
+                            View.PrintMsg("You win!");
                             var handCombination = gambler.GetHandCombination();
                             gambler.Money += 2*(int)ante;
                             gambler.Money += RankMoney(handCombination, ante, isJackpot);
                         }
                         else if (dealer == gambler)
                         {
-                            Console.WriteLine("Push!");
+                            View.PrintMsg("Push!");
                             gambler.Money += 3*(int)ante;
                         }
                         else
                         {
-                            Console.WriteLine("You lose!");
+                            View.PrintMsg("You lose!");
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Dealer folds!");
+                        View.PrintMsg("Dealer folds!");
                         gambler.Money += 4*(int)ante;
                     }
                 }
@@ -74,7 +72,7 @@ namespace CaribbeanPokerMain
                 deck.EnqueueHand(dealer.Cards);
                 deck.Shuffle();
             }
-            Console.WriteLine("You are broke. Goodbye!");
+            View.PrintMsg("You are broke. Goodbye!");
             gambler.Quit();         
         }
         private int RankMoney(HandCombination rank, Ante ante, bool isJackpot)

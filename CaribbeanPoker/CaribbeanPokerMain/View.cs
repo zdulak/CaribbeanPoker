@@ -4,12 +4,14 @@ namespace CaribbeanPokerMain
 {
     public static class View
     { 
+        public static void PrintMsg(string msg) => Console.WriteLine(msg);
         public static void PrintStatus(int money, int jackpot)
         {
             Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
         public static void DisplayBoard(Card[] dealer, Card[] player) 
         {
+            //Console.OutputEncoding = System.Text.Encoding.Unicode;
             Console.WriteLine("           ===  CASINO ROYAL ===");
             Console.WriteLine(".===========================================.");
             for (int i = 0; i <10; i++)

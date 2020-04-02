@@ -2,7 +2,7 @@ namespace CaribbeanPokerMain
 {
     public enum HandCombination
     {
-        nothing=1,
+        nothing = 1,
         pair,
         two_pair,
         triplets,
