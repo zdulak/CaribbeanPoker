@@ -6,21 +6,19 @@ namespace CaribbeanPokerMain
 {
     class CardsDao : ICardDao
     {
-        private string[] cardsDatabase;
-        public CardsDao(string path)
+        public Card GetCard(Suit suit, Rank rank)
         {
+            string picture;
+            string path = "..\\Cards\\Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
             try
             {
-                cardsDatabase = File.ReadAllLines(path);
+                picture = File.ReadAllText(path).Replace("\r", String.Empty);
             }
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine("I/O error: " + ex.Message);
+                picture = "error";
             }
-        }
-        public Card GetCard(Suit suit, Rank rank)
-        {
-            var picture = cardsDatabase[(int)rank-2+(int)suit*13];
             return new Card(suit, rank, picture: picture);
         }
         public List<Card> GetAllCards()

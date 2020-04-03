@@ -10,7 +10,7 @@ namespace CaribbeanPokerMain
         // Constructor creating a shuffled deck.
         public Deck()
         {
-            var cardsDao = new CardsDao("CardsData.txt");
+            var cardsDao = new CardsDao();
             random = new Random();
             cards = cardsDao.GetAllCards();
             Shuffle();
