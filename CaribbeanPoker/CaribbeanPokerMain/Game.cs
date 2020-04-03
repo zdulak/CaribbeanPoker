@@ -35,15 +35,17 @@ namespace CaribbeanPokerMain
                 }
                 gambler.Cards = deck.DequeueHand();
                 gambler.FlipCards(gambler.Cards.Length, sorted: true);
+                // View.DisplayCard(gambler.SortedCards[0]);
+                //View.DisplayHand(gambler.SortedCards);
                 dealer.Cards = deck.DequeueHand();
                 dealer.FlipCards(1, sorted: false); // Reveal the dealer's first card 
-                View.TestDisplayBoard(dealer.Cards, gambler.SortedCards, dealer.GetHandCombination(),
+                View.DisplayBoard(dealer.Cards, gambler.SortedCards, dealer.GetHandCombination(),
                     gambler.GetHandCombination());
                 if (gambler.GetCall())
                 {
                     gambler.Money -= 2*(int)ante;
                     dealer.FlipCards(dealer.Cards.Length, sorted: true);
-                    View.TestDisplayBoard(dealer.SortedCards, gambler.SortedCards,
+                    View.DisplayBoard(dealer.SortedCards, gambler.SortedCards,
                         dealer.GetHandCombination(),gambler.GetHandCombination());
                     if (dealer.IsQualify())
                     {

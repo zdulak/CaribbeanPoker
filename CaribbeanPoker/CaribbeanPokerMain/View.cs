@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using static System.Math;
 
 namespace CaribbeanPokerMain
 {
@@ -9,34 +11,59 @@ namespace CaribbeanPokerMain
         {
             Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
-        public static void DisplayBoard(Card[] dealer, Card[] player) 
+        public static void DisplayBoard(Card[] dealer, Card[] player, HandCombination dealerCombination,
+            HandCombination playerCombination) 
         {
             //Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.Clear();
-            Console.WriteLine("           ===  CASINO ROYAL ===");
-            Console.WriteLine(".===========================================.");
-            for (int i = 0; i <10; i++)
+            //Console.Clear();
+            Console.WriteLine(new String(' ', 16) + "===  CASINO ROYAL ===" + new String(' ', 16));
+            Console.WriteLine("." + new String('=', 51) + ".");
+            Console.WriteLine("|" + new String(' ', 51) + "|");
+            Console.WriteLine("|" + new String(' ', 15) + "Caribbean Stud Poker!" + new String(' ', 15) + "|");
+            Console.WriteLine("|" + new String(' ', 51) + "|");
+            var length = dealerCombination.ToString().Length;
+            var l1 = (35-length)/2;
+            var l2 = 35-length-l1;
+            Console.WriteLine("|" + new String(' ',l1)  + "Dealer Hand --> " 
+                + dealerCombination.ToString() + new String(' ', l2) + "|");
+            DisplayHand(dealer);
+            Console.WriteLine(new String('-', 53));
+            Console.WriteLine("|" + new String(' ', 51) + "|");
+            length = playerCombination.ToString().Length;
+            l1 = (35-length)/2;
+            l2 = 35-length-l1;
+            Console.WriteLine("|" + new String(' ',l1)  + "Player Hand --> " 
+                + playerCombination.ToString() + new String(' ', l2) + "|");
+            DisplayHand(player);
+            Console.WriteLine("." + new String('=', 51) + ".");
+        }
+
+        public static void DisplayHand(Card[] cards)
+        {
+            // Console.Clear();
+            var picturesIterators = new IEnumerator<string>[cards.Length];
+            for (int i = 0; i < cards.Length; ++i) 
+                picturesIterators[i] = new TextIterator(cards[i].Picture).WordIterator().GetEnumerator();
+            bool iterate = true;
+            while (iterate)
             {
-                Console.WriteLine("|                                           |");
+                Console.Write("|   ");
+                for (int i = 0; i < cards.Length; ++i)
+                {
+                    if (!picturesIterators[i].MoveNext()) 
+                    {
+                        iterate = false;
+                        continue;
+                    }
+                    Console.Write(" " + picturesIterators[i].Current + " ");
+                }
+                if (!iterate) Console.Write(new String(' ', 45));
+                Console.WriteLine("   |");
             }
-            Console.WriteLine("*===========================================*");
-            Console.SetCursorPosition(11,2);
-            Console.Write("Caribbean Stud Poker");
-            Console.SetCursorPosition(2,4);
-            Console.Write("Dealer Hand: ");
-            for (int i = 0; i < 5; i++)
-            {
-                Console.Write(dealer[i].Picture);
-            }
-            Console.SetCursorPosition(2,5);
-            Console.Write("--------------------------------------");
-            Console.SetCursorPosition(2,6);
-            Console.Write("Player Hand: ");
-            for (int i = 0; i < 5; i++)
-            {
-                Console.Write(player[i].Picture);
-            }
-            Console.SetCursorPosition(0,12);
+        }
+        public static void DisplayCard(Card card)
+        {
+            Console.WriteLine(card.Picture);
             Console.WriteLine();
         }
         public static void TestDisplayBoard(Card[] dealer, Card[] player, HandCombination dealerCombination,
