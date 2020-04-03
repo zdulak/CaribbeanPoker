@@ -8,8 +8,8 @@ namespace CaribbeanPokerMain
     {
         public bool IsQualify()
         {
-            if (GetHandCombination() == HandCombination.nothing && SortedCards[0].Rank == Rank.Ace 
-                && SortedCards[1].Rank == Rank.King)
+            if (GetHandCombination() > HandCombination.nothing || (SortedCards[0].Rank == Rank.Ace 
+                && SortedCards[1].Rank == Rank.King))
             {
                 return true;
             }
