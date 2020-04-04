@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static System.Math;
+using System.IO;
 
 namespace CaribbeanPokerMain
 {
@@ -11,39 +11,47 @@ namespace CaribbeanPokerMain
         {
             Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
-        public static void DisplayBoard(Card[] dealer, Card[] player, HandCombination dealerCombination,
-            HandCombination playerCombination) 
+        public static void DisplayBoard(Card[] dealer, Card[] player, string dealerCombination ="????",
+            string playerCombination="????") 
         {
-            //Console.OutputEncoding = System.Text.Encoding.UTF8;
-            //Console.Clear();
             Console.WriteLine(new String(' ', 16) + "===  CASINO ROYAL ===" + new String(' ', 16));
             Console.WriteLine("." + new String('=', 51) + ".");
             Console.WriteLine("|" + new String(' ', 51) + "|");
-            Console.WriteLine("|" + new String(' ', 15) + "Caribbean Stud Poker!" + new String(' ', 15) + "|");
+            Console.WriteLine("|" + new String(' ', 15) + "Caribbean Stud Poker!" 
+                + new String(' ', 15) + "|");
             Console.WriteLine("|" + new String(' ', 51) + "|");
-            var length = dealerCombination.ToString().Length;
-            var l1 = (35-length)/2;
-            var l2 = 35-length-l1;
-            Console.WriteLine("|" + new String(' ',l1)  + "Dealer Hand --> " 
-                + dealerCombination.ToString() + new String(' ', l2) + "|");
+            var length = dealerCombination.Length;
+            var spaceNumber1 = (35-length)/2;
+            var spaceNumber2 = 35-length-spaceNumber1;
+            Console.WriteLine("|" + new String(' ', spaceNumber1)  + "Dealer Hand --> " 
+                + dealerCombination + new String(' ', spaceNumber2) + "|");
             DisplayHand(dealer);
             Console.WriteLine(new String('-', 53));
             Console.WriteLine("|" + new String(' ', 51) + "|");
-            length = playerCombination.ToString().Length;
-            l1 = (35-length)/2;
-            l2 = 35-length-l1;
-            Console.WriteLine("|" + new String(' ',l1)  + "Player Hand --> " 
-                + playerCombination.ToString() + new String(' ', l2) + "|");
+            length = playerCombination.Length;
+            spaceNumber1 = (35-length)/2;
+            spaceNumber2 = 35-length-spaceNumber1;
+            Console.WriteLine("|" + new String(' ', spaceNumber1)  + "Player Hand --> " 
+                + playerCombination + new String(' ', spaceNumber2) + "|");
             DisplayHand(player);
             Console.WriteLine("." + new String('=', 51) + ".");
         }
 
         public static void DisplayHand(Card[] cards)
         {
-            // Console.Clear();
+            string cardBack = File.ReadAllText("..\\Cards\\Card_Back.txt").Replace("\r", String.Empty);
             var picturesIterators = new IEnumerator<string>[cards.Length];
-            for (int i = 0; i < cards.Length; ++i) 
-                picturesIterators[i] = new TextIterator(cards[i].Picture).WordIterator().GetEnumerator();
+            for (int i = 0; i < cards.Length; ++i)
+            {
+                if (cards[i].FaceUp)
+                {
+                    picturesIterators[i] = new TextIterator(cards[i].Picture).WordIterator().GetEnumerator();
+                }
+                else
+                {
+                    picturesIterators[i] = new TextIterator(cardBack).WordIterator().GetEnumerator();
+                }
+            }
             bool iterate = true;
             while (iterate)
             {
