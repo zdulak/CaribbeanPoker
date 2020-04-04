@@ -39,7 +39,7 @@ namespace CaribbeanPokerMain
 
         public static void DisplayHand(Card[] cards)
         {
-            string cardBack = File.ReadAllText("..\\Cards\\Card_Back.txt").Replace("\r", String.Empty);
+            string cardBack = File.ReadAllText(@"..\Cards\Card_Back.txt").Replace("\r", String.Empty);
             var picturesIterators = new IEnumerator<string>[cards.Length];
             for (int i = 0; i < cards.Length; ++i)
             {
