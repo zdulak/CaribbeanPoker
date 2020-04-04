@@ -9,7 +9,7 @@ namespace CaribbeanPokerMain
         public Card GetCard(Suit suit, Rank rank)
         {
             string picture;
-            string path = "..\\Cards\\Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
+            string path = @"..\Cards\Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
             try
             {
                 picture = File.ReadAllText(path).Replace("\r", String.Empty);
