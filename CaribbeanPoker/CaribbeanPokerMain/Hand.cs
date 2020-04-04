@@ -23,15 +23,15 @@ namespace CaribbeanPokerMain
         }
         public Card[] SortedCards => _sortedCards;
         // Method flips the first n cards  
-        public void FlipCards(int number, bool sorted)
+        public void FlipCards(int number, bool sorted, bool faceUp)
         {
             if (sorted)
             {
-                for (int i = 0; i < number; ++i) SortedCards[i].FaceUp = !SortedCards[i].FaceUp;
+                for (int i = 0; i < number; ++i) SortedCards[i].FaceUp = faceUp;
             }
             else
             {
-                for (int i = 0; i < number; ++i) Cards[i].FaceUp = !Cards[i].FaceUp;;
+                for (int i = 0; i < number; ++i) Cards[i].FaceUp = faceUp;
             }
             
         }
