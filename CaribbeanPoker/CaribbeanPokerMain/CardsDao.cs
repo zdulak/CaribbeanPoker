@@ -17,7 +17,8 @@ namespace CaribbeanPokerMain
             catch (FileNotFoundException ex)
             {
                 Console.WriteLine("I/O error: " + ex.Message);
-                picture = "error";
+                //Console.WriteLine(path);
+                picture = path;
             }
             return new Card(suit, rank, picture: picture);
         }
