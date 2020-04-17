@@ -9,6 +9,7 @@ namespace CaribbeanPokerMain
         private Gambler gambler;
         private Dealer dealer;
         private Deck deck;
+        private View view;
         private const int JackpotAnte = 10;
         private const int JackpotDefault = 10000;
         private int jackpot;
@@ -17,17 +18,19 @@ namespace CaribbeanPokerMain
             gambler = new Gambler();
             dealer = new Dealer();
             deck = new Deck();
+            view =new View();
             jackpot = JackpotDefault;
         }
 
         public void Run()
         {
+            view.Clear();
             while (!gambler.IsBroke())
             {
-                View.PrintStatus(gambler.Money, jackpot);
-                var ante = gambler.GetAnte();
+                view.PrintStatus(gambler.Money, jackpot);
+                var ante = gambler.TheController.GetAnte();
                 gambler.Money -= (int)ante;
-                var isJackpot = gambler.GetJackpot();
+                var isJackpot = gambler.TheController.GetJackpot();
                 if (isJackpot) 
                 {
                     jackpot += JackpotAnte;
@@ -37,35 +40,36 @@ namespace CaribbeanPokerMain
                 gambler.FlipCards(gambler.Cards.Length, sorted: true, true);
                 dealer.Cards = deck.DequeueHand();
                 dealer.FlipCards(1, sorted: false, true); // Reveal the dealer's first card 
-                View.DisplayBoard(dealer.Cards, gambler.SortedCards,
+                view.DisplayBoard(dealer.Cards, gambler.SortedCards, deck.CardBack,
                     playerCombination: gambler.GetHandCombination().ToString());
-                if (gambler.GetCall())
+                if (gambler.TheController.GetCall())
                 {
                     gambler.Money -= 2*(int)ante;
                     dealer.FlipCards(dealer.Cards.Length, sorted: true, true);
-                    View.DisplayBoard(dealer.SortedCards, gambler.SortedCards,
+                    view.DisplayBoard(dealer.SortedCards, gambler.SortedCards, deck.CardBack,
                         dealer.GetHandCombination().ToString(), gambler.GetHandCombination().ToString());
                     if (dealer.IsQualify())
                     {
                         if (gambler > dealer)
                         {
-                            View.PrintMsg("You win!");
-                            gambler.Money += 3*(int)ante;
-                            gambler.Money += RankMoney(gambler.GetHandCombination(), ante, isJackpot);
+                            view.PrintMsg("You win!");
+                            gambler.Money += 3*(int)ante; // return player money
+                            gambler.Money += (int)ante;  // won dealer ante
+                            gambler.Money += RankMoney(gambler.GetHandCombination(), ante, isJackpot); // won bet bonus money
                         }
                         else if (dealer == gambler)
                         {
-                            View.PrintMsg("Push!");
+                            view.PrintMsg("Push!");
                             gambler.Money += 3*(int)ante;
                         }
                         else
                         {
-                            View.PrintMsg("You lose!");
+                            view.PrintMsg("You lose!");
                         }
                     }
                     else
                     {
-                        View.PrintMsg("Dealer folds!");
+                        view.PrintMsg("Dealer folds!");
                         gambler.Money += 4*(int)ante;
                     }
                 }
@@ -75,8 +79,8 @@ namespace CaribbeanPokerMain
                 deck.EnqueueHand(dealer.Cards);
                 deck.Shuffle();
             }
-            View.PrintMsg("You are broke. Goodbye!");
-            gambler.Quit();         
+            view.PrintMsg("You are broke. Goodbye!");
+            gambler.TheController.Quit();         
         }
         private int RankMoney(HandCombination rank, Ante ante, bool isJackpot)
         {

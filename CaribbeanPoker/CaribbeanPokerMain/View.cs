@@ -4,14 +4,15 @@ using System.IO;
 
 namespace CaribbeanPokerMain
 {
-    public static class View
-    { 
-        public static void PrintMsg(string msg) => Console.WriteLine(msg);
-        public static void PrintStatus(int money, int jackpot)
+    public class View
+    {
+        public void Clear() => Console.Clear();
+        public void PrintMsg(string msg) => Console.WriteLine(msg);
+        public void PrintStatus(int money, int jackpot)
         {
             Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
-        public static void DisplayBoard(Card[] dealer, Card[] player, string dealerCombination ="????",
+        public void DisplayBoard(Card[] dealer, Card[] player, Card cardBack , string dealerCombination ="????",
             string playerCombination="????") 
         {
             Console.WriteLine(new String(' ', 16) + "===  CASINO ROYAL ===" + new String(' ', 16));
@@ -25,7 +26,7 @@ namespace CaribbeanPokerMain
             var spaceNumber2 = 35-length-spaceNumber1;
             Console.WriteLine("|" + new String(' ', spaceNumber1)  + "Dealer Hand --> " 
                 + dealerCombination + new String(' ', spaceNumber2) + "|");
-            DisplayHand(dealer);
+            DisplayHand(dealer, cardBack);
             Console.WriteLine(new String('-', 53));
             Console.WriteLine("|" + new String(' ', 51) + "|");
             length = playerCombination.Length;
@@ -33,13 +34,12 @@ namespace CaribbeanPokerMain
             spaceNumber2 = 35-length-spaceNumber1;
             Console.WriteLine("|" + new String(' ', spaceNumber1)  + "Player Hand --> " 
                 + playerCombination + new String(' ', spaceNumber2) + "|");
-            DisplayHand(player);
+            DisplayHand(player, cardBack);
             Console.WriteLine("." + new String('=', 51) + ".");
         }
 
-        public static void DisplayHand(Card[] cards)
+        public void DisplayHand(Card[] cards, Card cardBack)
         {
-            string cardBack = File.ReadAllText(@"..\Cards\Card_Back.txt").Replace("\r", String.Empty);
             var picturesIterators = new IEnumerator<string>[cards.Length];
             for (int i = 0; i < cards.Length; ++i)
             {
@@ -49,7 +49,7 @@ namespace CaribbeanPokerMain
                 }
                 else
                 {
-                    picturesIterators[i] = new TextIterator(cardBack).WordIterator().GetEnumerator();
+                    picturesIterators[i] = new TextIterator(cardBack.Picture).WordIterator().GetEnumerator();
                 }
             }
             bool iterate = true;
@@ -69,22 +69,22 @@ namespace CaribbeanPokerMain
                 Console.WriteLine("   |");
             }
         }
-        public static void DisplayCard(Card card)
-        {
-            Console.WriteLine(card.Picture);
-            Console.WriteLine();
-        }
-        public static void TestDisplayBoard(Card[] dealer, Card[] player, HandCombination dealerCombination,
-            HandCombination playerCombination)
-        {
-            //Console.Clear();
-            Console.WriteLine("           ===  CASINO ROYAL ===");
-            Console.Write("Dealer Hand: |");
-            foreach (var card in dealer) Console.Write(card.ToString() + "| ");
-            Console.WriteLine("-> " + dealerCombination.ToString());
-            Console.Write("Player Hand: |");
-            foreach (var card in player) Console.Write(card.ToString() + "| ");
-            Console.WriteLine("-> " + playerCombination.ToString());
-        }
+        // public static void DisplayCard(Card card)
+        // {
+        //     Console.WriteLine(card.Picture);
+        //     Console.WriteLine();
+        // }
+        // public static void TestDisplayBoard(Card[] dealer, Card[] player, HandCombination dealerCombination,
+        //     HandCombination playerCombination)
+        // {
+        //     //Console.Clear();
+        //     Console.WriteLine("           ===  CASINO ROYAL ===");
+        //     Console.Write("Dealer Hand: |");
+        //     foreach (var card in dealer) Console.Write(card.ToString() + "| ");
+        //     Console.WriteLine("-> " + dealerCombination.ToString());
+        //     Console.Write("Player Hand: |");
+        //     foreach (var card in player) Console.Write(card.ToString() + "| ");
+        //     Console.WriteLine("-> " + playerCombination.ToString());
+        // }
     }
 }

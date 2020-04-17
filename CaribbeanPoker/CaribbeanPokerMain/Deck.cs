@@ -6,6 +6,7 @@ namespace CaribbeanPokerMain
     class Deck
     {
         private List<Card> cards;
+        public Card CardBack {get;}
         private Random random;
         // Constructor creating a shuffled deck.
         public Deck()
@@ -14,6 +15,7 @@ namespace CaribbeanPokerMain
             random = new Random();
             cards = cardsDao.GetAllCards();
             Shuffle();
+            CardBack = cardsDao.GetCard(0,0);
         }
         // Modern Fisher–Yates shuffle algorithm.
         public void Shuffle()
