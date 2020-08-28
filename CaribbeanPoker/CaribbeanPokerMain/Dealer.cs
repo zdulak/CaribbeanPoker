@@ -4,16 +4,13 @@ using System.Text;
 
 namespace CaribbeanPokerMain
 {
-    class Dealer : Hand
+    class Dealer
     {
-        public bool IsQualify()
-        {
-            if (GetHandCombination() > HandCombination.nothing || (SortedCards[0].Rank == Rank.Ace 
-                && SortedCards[1].Rank == Rank.King))
-            {
-                return true;
-            }
-            return false;
-        } 
+        public Hand Hand { get; }
+
+        public Dealer() => Hand = new Hand();
+
+        public bool IsQualify() => Hand.GetHandCombination() > HandCombination.nothing || (Hand.SortedCards[0].Rank == Rank.Ace 
+        && Hand.SortedCards[1].Rank == Rank.King);
     }
 }

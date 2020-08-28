@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace CaribbeanPokerMain
 {
-    class Hand : IComparable<Hand>, IEquatable<Hand>
+    class Hand : IHand
     {
         private Card[] _cards;
-        private Card[] _sortedCards;
+
         public Card[] Cards 
         {
             get => _cards;
@@ -15,23 +15,24 @@ namespace CaribbeanPokerMain
             {
                 _cards = value;
                 // Sort cards first by the size of the groups of identical ranks and then by ranks.
-                _sortedCards = GroupByRank().OrderByDescending(x => x.Count())
+                SortedCards = GroupByRank().OrderByDescending(x => x.Count())
                     .ThenByDescending(x => x.Key).SelectMany(x => x).ToArray();
-                // If we have the lowest straight this method exchanges the Ace for the low_Ace.
+                // If we have the lowest straight this method exchanges the Ace for the LowAce.
                 AceExchange();
             }
         }
-        public Card[] SortedCards => _sortedCards;
+        public Card[] SortedCards { get; private set; }
+
         // Method flips the first n cards  
         public void FlipCards(int number, bool sorted, bool faceUp)
         {
             if (sorted)
             {
-                for (int i = 0; i < number; ++i) SortedCards[i].FaceUp = faceUp;
+                for (var i = 0; i < number; ++i) SortedCards[i].FaceUp = faceUp;
             }
             else
             {
-                for (int i = 0; i < number; ++i) Cards[i].FaceUp = faceUp;
+                for (var i = 0; i < number; ++i) Cards[i].FaceUp = faceUp;
             }
             
         }
@@ -39,37 +40,27 @@ namespace CaribbeanPokerMain
         {
             var thisCombination = GetHandCombination();
             var otherCombination = other.GetHandCombination();
-            if (thisCombination != otherCombination)
-            {
-               return thisCombination.CompareTo(otherCombination); 
-            }
-            else
-            {
-                return CompareByRanks(other);
-            }
+            return thisCombination != otherCombination ? thisCombination.CompareTo(otherCombination) : CompareByRanks(other);
         }
         public bool Equals(Hand other) => CompareTo(other) == 0;
         public override bool Equals(object other)
         {
-             // Check for null and compare run-time types.
-            if ((other == null) || !this.GetType().Equals(other.GetType())) 
+            // Check for null and compare run-time types.
+            if ((other == null) || this.GetType() != other.GetType()) 
             {
                 return false;
             }
-            else
-            {
-                return Equals((Hand)other);
-            }
+            return Equals((Hand)other);
         }
         public static bool operator > (Hand op1, Hand op2) => op1.CompareTo(op2) == 1;
         public static bool operator < (Hand op1, Hand op2) => op1.CompareTo(op2) == -1;
-        public static bool operator != (Hand op1, Hand op2) => !op1.Equals(op2);
         public static bool operator == (Hand op1, Hand op2) => op1.Equals(op2);
+        public static bool operator != (Hand op1, Hand op2) => !(op1 == op2);
         public override int GetHashCode() => SortedCards.Aggregate<Card, int>(1, (x, y) => x.GetHashCode() ^ y.GetHashCode());
         public HandCombination GetHandCombination()
         {
             var isStraight = IsStraight();
-            var groupsByRank = GroupByRank();
+            var groupsByRank = GroupByRank().ToArray();
             var isFlush = SortedCards.All(x => x.Suit == SortedCards.First().Suit);
             var isTriplets = groupsByRank.Any(x => x.Count() == 3);
             var isPair = groupsByRank.Any(x => x.Count() == 2);
@@ -81,23 +72,22 @@ namespace CaribbeanPokerMain
             if (isStraight) return HandCombination.straight;
             if (isTriplets) return HandCombination.triplets;
             if (groupsByRank.Where(x => x.Count() == 2).Count() == 2) return HandCombination.two_pair;
-            if (isPair) return HandCombination.pair;
-            return HandCombination.nothing;
+            return isPair ? HandCombination.pair : HandCombination.nothing;
         }
         private int CompareByRanks(Hand other)
         {
             var pairsCards = SortedCards.Zip(other.SortedCards, (x,y) => (x,y));
-            foreach (var pair in pairsCards)
+            foreach (var (x, y) in pairsCards)
             {
-                if (pair.x.Rank > pair.y.Rank) return 1;
-                if (pair.x.Rank < pair.y.Rank) return -1;
+                if (x.Rank > y.Rank) return 1;
+                if (x.Rank < y.Rank) return -1;
             }
             return 0;
         }
         private IEnumerable<IGrouping<Rank, Card>> GroupByRank() => Cards.GroupBy(x => x.Rank);
         private bool IsStraight()
         {
-            for (int i = 0; i < SortedCards.Length - 1; ++i)
+            for (var i = 0; i < SortedCards.Length - 1; ++i)
             {
                 if (SortedCards[i+1].Rank + 1 != SortedCards[i].Rank) return false;
             }
@@ -108,7 +98,7 @@ namespace CaribbeanPokerMain
             var lowestStraight = new Rank[] {Rank.Ace, Rank.Five, Rank.Four, Rank.Three, Rank.Two};
             if (SortedCards.Select(x => x.Rank).SequenceEqual(lowestStraight))
             {
-                SortedCards[0] = new Card(SortedCards[0].Suit, Rank.low_Ace, SortedCards[0].FaceUp, SortedCards[0].Picture);
+                SortedCards[0] = new Card(SortedCards[0].Suit, Rank.LowAce, SortedCards[0].FaceUp, SortedCards[0].Picture);
                 Array.Sort(SortedCards, (x,y) => -x.Rank.CompareTo(y.Rank)); // Sort cards in descending order;
             }
         }
