@@ -1,12 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CaribbeanPokerMain
 {
-    enum Ante
+    public static class Ante
     {
-        Ten = 10,
-        Twenty = 20,
-        Fifty = 50,
-        Hundred = 100
+        public static ReadOnlyCollection<int> PossibleValues { get; } = (new List<int> {10, 20, 50, 100}).AsReadOnly();
     }
 }

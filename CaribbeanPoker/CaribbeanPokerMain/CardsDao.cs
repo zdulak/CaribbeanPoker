@@ -9,7 +9,7 @@ namespace CaribbeanPokerMain
         public Card GetCard(Suit suit, Rank rank)
         {
             string picture;
-            string path = @"../Cards/Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
+            var path = @"../Cards/Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
 
             try
             {
@@ -26,9 +26,9 @@ namespace CaribbeanPokerMain
         public List<Card> GetAllCards()
         {
             var cards = new List<Card>();
-            for (int suit = 0; suit < 4; ++suit)
+            for (var suit = 0; suit < 4; ++suit)
             {
-                for (int rank = 2; rank < 15; ++rank)
+                for (var rank = 2; rank < 15; ++rank)
                 {
                     cards.Add(GetCard((Suit)suit, (Rank)rank));
                 }

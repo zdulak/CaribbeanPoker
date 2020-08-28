@@ -6,74 +6,60 @@ namespace CaribbeanPokerMain
 {
     class Controller
     {
+
         public void Quit()
         {
-            System.Environment.Exit(0);
+            Environment.Exit(0);
         }
-        public Ante GetAnte()
+        public int GetAnte()
         {
-            Ante ante = 0;
-            while(ante == 0) 
+            while(true) 
             {
-                Console.WriteLine("Bet obligatory Ante or write quit in order to close the program.");
-                Console.Write("Possible values of the Ante: " );
-                foreach (var name in Enum.GetValues(typeof(Ante))) Console.Write((int)name + " ");
+                Console.WriteLine("Bet obligatory ante or write quit in order to close the program.");
+                Console.Write("Possible values of the ante: " );
+                foreach (var name in Ante.PossibleValues)
+                {
+                    Console.Write(name + " ");
+                }
                 Console.Write("\n");
-                try
+                var input = Console.ReadLine();
+                if (input == "quit")
                 {
-                    var  input = Console.ReadLine();
-                    if (input.ToLower() == "quit") Quit();
-                    ante = (Ante)Enum.Parse(typeof(Ante), input);
-                }
-                catch(Exception)
-                {
-                    Console.WriteLine("You have entered an invalid value.");
-                    ante = 0;
-                }
-            } 
-            return ante;
-
-        }
-        public bool GetJackpot()
-        {
-            var input = "start";
-            while(input != "Y")
-            {
-                Console.WriteLine("Do  you want to participate in the jackpot? Y/N");
-                input = Console.ReadLine().ToUpper();
-                if (input == "Y")
-                {
-                    return true;
-                }
-                else if (input == "N")
-                {
-                    return false;  
+                    Quit();
                 }
                 else
                 {
-                    Console.WriteLine("You have entered an invalid value");
+                    if (!int.TryParse(input, out int ante))
+                    {
+                        Console.WriteLine("You have entered an invalid value");
+                        continue;
+                    }
+                    foreach (var anteValue in Ante.PossibleValues)
+                    {
+                        if (ante == anteValue)
+                        {
+                            return ante;
+                        }
+                    }
                 }
             }
-            return true;
         }
-        public bool GetCall()
+        public bool GetAnswer(string message)
         {
             var input = "start";
             while(input != "Y")
             {
-                Console.WriteLine("Do  you raise? Y/N");
+                Console.WriteLine(message + " Y/N");
                 input = Console.ReadLine().ToUpper();
-                if (input == "Y")
+                switch (input)
                 {
-                    return true;
-                }
-                else if (input == "N")
-                {
-                    return false;  
-                }
-                else
-                {
-                    Console.WriteLine("You have entered an invalid value");
+                    case "Y":
+                        return true;
+                    case "N":
+                        return false;
+                    default:
+                        Console.WriteLine("You have entered an invalid value");
+                        break;
                 }
             }
             return true;

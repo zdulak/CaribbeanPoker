@@ -4,7 +4,7 @@ namespace CaribbeanPokerMain
 {
     public enum Rank
     {
-        low_Ace = 1,
+        LowAce = 1,
         Two = 2,
         Three = 3,
         Four = 4,

@@ -5,9 +5,9 @@ namespace CaribbeanPokerMain
 {
     class Deck
     {
-        private List<Card> cards;
+        private readonly List<Card> cards;
         public Card CardBack {get;}
-        private Random random;
+        private readonly Random random;
         // Constructor creating a shuffled deck.
         public Deck()
         {
