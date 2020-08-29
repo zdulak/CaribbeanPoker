@@ -4,7 +4,7 @@ using System.IO;
 
 namespace CaribbeanPokerMain
 {
-    public class View
+    public class View : IView
     {
         public void Clear() => Console.Clear();
         public void PrintMsg(string msg) => Console.WriteLine(msg);

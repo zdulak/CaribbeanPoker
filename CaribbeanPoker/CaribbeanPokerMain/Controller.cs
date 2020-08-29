@@ -5,13 +5,13 @@ using System.Text;
 
 namespace CaribbeanPokerMain
 {
-    class Controller
+    class Controller : IController
     {
         private readonly View _view;
 
-        public Controller()
+        public Controller(View view)
         {
-            _view = new View();
+            _view = view;
         }
 
         public void Quit()

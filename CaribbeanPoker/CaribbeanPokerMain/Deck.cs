@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace CaribbeanPokerMain
 {
-    class Deck
+    class Deck : IDeck
     {
         private readonly List<Card> _cards;
         public Card CardBack {get;}
+
         private readonly Random _random;
         // Constructor creating a shuffled deck.
-        public Deck()
+        public Deck(ICardDao cardsDao, Random random)
         {
-            var cardsDao = new CardsDao();
-            _random = new Random();
+            _random = random;
             _cards = cardsDao.GetAllCards();
             Shuffle();
             CardBack = cardsDao.GetCard(0,0);

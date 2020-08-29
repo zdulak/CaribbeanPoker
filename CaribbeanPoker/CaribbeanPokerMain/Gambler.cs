@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CaribbeanPokerMain
 {
-    class Gambler
+    class Gambler : IGambler
     {
         public Wallet Wallet { get; }
         public Controller Controller { get;}
