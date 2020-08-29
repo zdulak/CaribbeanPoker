@@ -1,11 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CaribbeanPokerMain
 {
     class Controller
     {
+        private readonly View _view;
+
+        public Controller()
+        {
+            _view = new View();
+        }
 
         public void Quit()
         {
@@ -13,44 +20,28 @@ namespace CaribbeanPokerMain
         }
         public int GetAnte()
         {
-            while(true) 
+            while (true)
             {
-                Console.WriteLine("Bet obligatory ante or write quit in order to close the program.");
-                Console.Write("Possible values of the ante: " );
-                foreach (var name in Ante.PossibleValues)
-                {
-                    Console.Write(name + " ");
-                }
-                Console.Write("\n");
+                _view.PrintMsg("Bet obligatory ante or write quit in order to close the program.");
+                _view.PrintMsg("Possible values of the ante: " + string.Join(" ", Ante.PossibleValues));
                 var input = Console.ReadLine();
                 if (input == "quit")
                 {
                     Quit();
                 }
-                else
+                if (int.TryParse(input, out int ante) && Ante.PossibleValues.Contains(ante))
                 {
-                    if (!int.TryParse(input, out int ante))
-                    {
-                        Console.WriteLine("You have entered an invalid value");
-                        continue;
-                    }
-                    foreach (var anteValue in Ante.PossibleValues)
-                    {
-                        if (ante == anteValue)
-                        {
-                            return ante;
-                        }
-                    }
+                    return ante;
                 }
+                _view.PrintMsg("You have entered an invalid value");
             }
         }
         public bool GetAnswer(string message)
         {
-            var input = "start";
-            while(input != "Y")
+            while (true)
             {
-                Console.WriteLine(message + " Y/N");
-                input = Console.ReadLine().ToUpper();
+                _view.PrintMsg(message + " Y/N");
+                var input = Console.ReadLine().ToUpper();
                 switch (input)
                 {
                     case "Y":
@@ -58,11 +49,10 @@ namespace CaribbeanPokerMain
                     case "N":
                         return false;
                     default:
-                        Console.WriteLine("You have entered an invalid value");
+                        _view.PrintMsg("You have entered an invalid value");
                         break;
                 }
             }
-            return true;
         }
     }
 }
