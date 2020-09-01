@@ -2,8 +2,10 @@
 {
     internal interface IGambler
     {
-        Wallet Wallet { get; }
-        Controller Controller { get; }
+        IWallet Wallet { get; }
+        IController Controller { get; }
         Hand Hand { get; }
+        int PayAnte();
+        bool IsJackpot(int ante, int jackpotAnte);
     }
 }

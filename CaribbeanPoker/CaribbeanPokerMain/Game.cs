@@ -6,20 +6,20 @@ namespace CaribbeanPokerMain
 {
     class Game
     {
-        private readonly Gambler _gambler;
-        private readonly Dealer _dealer;
-        private readonly Deck _deck;
-        private readonly View _view;
+        private readonly IGambler _gambler;
+        private readonly IDealer _dealer;
+        private readonly IDeck _deck;
+        private readonly IView _view;
         private int _jackpot;
         private const int JackpotAnte = 10;
         private const int JackpotDefault = 10000;
-        public Game()
+        public Game(IGambler gambler, IDealer dealer, IDeck deck, IView view)
         {
 
-            _gambler = new Gambler();
-            _dealer = new Dealer();
-            _deck = new Deck();
-            _view = new View();
+            _gambler = gambler;
+            _dealer = dealer;
+            _deck = deck;
+            _view = view;
             _jackpot = JackpotDefault;
         }
 
@@ -29,30 +29,11 @@ namespace CaribbeanPokerMain
             while (!_gambler.Wallet.IsBroke())
             {
                 _view.PrintStatus(_gambler.Wallet.Money, _jackpot);
-                bool isAntePaid = false;
-                int ante = 0;
-                while (!isAntePaid)
+                int ante = _gambler.PayAnte();
+                bool isJackpot = _gambler.IsJackpot(ante, JackpotAnte);
+                if (isJackpot)
                 {
-                    ante = _gambler.Controller.GetAnte();
-                    if (_gambler.Wallet.IsEnoughForAnte(ante))
-                    {
-                        _gambler.Wallet.Money -= ante;
-                        isAntePaid = true;
-                    }
-                    else
-                    {
-                        _view.PrintMsg("Not enough money in the wallet. Choose smaller ante.");
-                    }
-                }
-                bool isJackpot = false;
-                if (_gambler.Wallet.IsEnoughForJackpot(ante, JackpotAnte))
-                {
-                    isJackpot = _gambler.Controller.GetAnswer("Do  you want to participate in the jackpot?");
-                    if (isJackpot)
-                    {
-                        _jackpot += JackpotAnte;
-                        _gambler.Wallet.Money -= JackpotAnte;
-                    }
+                    _jackpot += JackpotAnte;
                 }
                 _gambler.Hand.Cards = _deck.DequeueHand();
                 _gambler.Hand.FlipCards(_gambler.Hand.Cards.Length, sorted: true, true);
@@ -71,8 +52,7 @@ namespace CaribbeanPokerMain
                         if (_gambler.Hand > _dealer.Hand)
                         {
                             _view.PrintMsg("You win!");
-                            _gambler.Wallet.Money += 3*ante; // return player money
-                            _gambler.Wallet.Money += ante;  // won dealer anteValues
+                            _gambler.Wallet.Money += 4*ante; // return player money and won dealer ante
                             _gambler.Wallet.Money += RankMoney(_gambler.Hand.GetHandCombination(), ante, isJackpot); // won bet bonus money
                         }
                         else if (_dealer.Hand == _gambler.Hand)
