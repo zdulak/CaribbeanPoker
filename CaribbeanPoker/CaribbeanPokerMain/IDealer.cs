@@ -1,6 +1,6 @@
 ﻿namespace CaribbeanPokerMain
 {
-    internal interface IDealer
+    internal interface IDealer : IDependency
     {
         Hand Hand { get; }
         bool IsQualify();

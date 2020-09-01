@@ -1,6 +1,6 @@
 namespace CaribbeanPokerMain
 {
-    internal interface IController
+    internal interface IController : IDependency
     {
         IView View { get; }
         void Quit();

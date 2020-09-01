@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace CaribbeanPokerMain
 {
-    interface ICardDao
+    interface ICardDao : IDependency
     {
         // Method loads a card from a file 
         Card GetCard(Suit suit, Rank rank);

@@ -1,6 +1,6 @@
 namespace CaribbeanPokerMain
 {
-    internal interface IDeck
+    internal interface IDeck : IDependency
     {
         Card CardBack { get; }
         void Shuffle();

@@ -1,6 +1,6 @@
 ﻿namespace CaribbeanPokerMain
 {
-    internal interface IGambler
+    internal interface IGambler: IDependency
     {
         IWallet Wallet { get; }
         IController Controller { get; }
