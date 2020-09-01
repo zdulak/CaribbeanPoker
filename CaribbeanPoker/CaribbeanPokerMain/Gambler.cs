@@ -9,11 +9,11 @@ namespace CaribbeanPokerMain
         public IWallet Wallet { get; }
         public IController Controller { get;}
         public Hand Hand { get; }
-        public Gambler(IController controller, IWallet wallet)
+        public Gambler(IController controller, IWallet wallet, Hand hand)
         {
             Wallet = wallet;
             Controller = controller;
-            Hand = new Hand();
+            Hand = hand;
         }
         public int PayAnte()
         {

@@ -4,7 +4,7 @@
     {
         public Wallet()
         {
-            Money = 100;
+            Money = 1000;
         }
         public int Money { get; set; }
         public bool IsBroke() => Money < 3 * Ante.PossibleValues[0];
