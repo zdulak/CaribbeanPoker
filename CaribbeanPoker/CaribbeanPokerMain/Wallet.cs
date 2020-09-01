@@ -1,6 +1,6 @@
 ﻿namespace CaribbeanPokerMain
 {
-    class Wallet
+    class Wallet : IWallet
     {
         public Wallet()
         {

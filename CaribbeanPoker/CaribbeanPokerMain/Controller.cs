@@ -7,11 +7,11 @@ namespace CaribbeanPokerMain
 {
     class Controller : IController
     {
-        private readonly View _view;
+        public IView View { get; }
 
-        public Controller(View view)
+        public Controller(IView view)
         {
-            _view = view;
+            View = view;
         }
 
         public void Quit()
@@ -22,8 +22,8 @@ namespace CaribbeanPokerMain
         {
             while (true)
             {
-                _view.PrintMsg("Bet obligatory ante or write quit in order to close the program.");
-                _view.PrintMsg("Possible values of the ante: " + string.Join(" ", Ante.PossibleValues));
+                View.PrintMsg("Bet obligatory ante or write quit in order to close the program.");
+                View.PrintMsg("Possible values of the ante: " + string.Join(" ", Ante.PossibleValues));
                 var input = Console.ReadLine();
                 if (input == "quit")
                 {
@@ -33,14 +33,14 @@ namespace CaribbeanPokerMain
                 {
                     return ante;
                 }
-                _view.PrintMsg("You have entered an invalid value");
+                View.PrintMsg("You have entered an invalid value");
             }
         }
         public bool GetAnswer(string message)
         {
             while (true)
             {
-                _view.PrintMsg(message + " Y/N");
+                View.PrintMsg(message + " Y/N");
                 var input = Console.ReadLine().ToUpper();
                 switch (input)
                 {
@@ -49,7 +49,7 @@ namespace CaribbeanPokerMain
                     case "N":
                         return false;
                     default:
-                        _view.PrintMsg("You have entered an invalid value");
+                        View.PrintMsg("You have entered an invalid value");
                         break;
                 }
             }

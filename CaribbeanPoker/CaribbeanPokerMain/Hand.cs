@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CaribbeanPokerMain
 {
-    class Hand : IHand
+    class Hand : IComparable<Hand>, IEquatable<Hand>
     {
         private Card[] _cards;
 
@@ -54,7 +54,7 @@ namespace CaribbeanPokerMain
         }
         public static bool operator > (Hand op1, Hand op2) => op1.CompareTo(op2) == 1;
         public static bool operator < (Hand op1, Hand op2) => op1.CompareTo(op2) == -1;
-        public static bool operator == (Hand op1, Hand op2) => op1.Equals(op2);
+        public static bool operator == (Hand op1, Hand op2) => !(op1 is null) && op1.Equals(op2);
         public static bool operator != (Hand op1, Hand op2) => !(op1 == op2);
         public override int GetHashCode() => SortedCards.Aggregate<Card, int>(1, (x, y) => x.GetHashCode() ^ y.GetHashCode());
         public HandCombination GetHandCombination()
