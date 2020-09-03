@@ -15,6 +15,7 @@ namespace CaribbeanPokerMain
             {
                 _cards = value;
                 // Sort cards first by the size of the groups of identical ranks and then by ranks.
+                // SelectMany only takes list of cards from each group and after that it flattens groups into one sequence.
                 SortedCards = GroupByRank().OrderByDescending(x => x.Count())
                     .ThenByDescending(x => x.Key).SelectMany(x => x).ToArray();
                 // If we have the lowest straight this method exchanges the Ace for the LowAce.
