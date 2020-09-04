@@ -6,10 +6,18 @@ namespace CaribbeanPoker.Test
 {
     public class HandShould
     {
-        [Fact]
-        public void Test1()
+        private readonly Hand _hand;
+        public HandShould(Hand hand)
         {
-
+            _hand = hand;
+        }
+        [Theory]
+        [InlineData()]
+        public void GetHandCombination_NoCombination_ReturnNothing(Card[] cards)
+        {
+            _hand.Cards = cards;
+            var handCombination = _hand.GetHandCombination();
+            Assert.Equal(HandCombination.nothing, handCombination);
         }
     }
 }
