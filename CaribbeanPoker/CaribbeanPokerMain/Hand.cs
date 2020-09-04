@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace CaribbeanPokerMain
 {
-    class Hand : IComparable<Hand>, IEquatable<Hand>
+    public class Hand : IComparable<Hand>, IEquatable<Hand>
     {
         private Card[] _cards;
 
