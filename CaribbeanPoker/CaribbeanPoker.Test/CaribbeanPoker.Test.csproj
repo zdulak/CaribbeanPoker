@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CaribbeanPokerMain\CaribbeanPokerMain.csproj" />
+    <ProjectReference Include="..\CaribbeanPoker.Main\CaribbeanPoker.Main.csproj" />
   </ItemGroup>
 
 </Project>
