@@ -6,10 +6,10 @@ using CaribbeanPoker.Main;
 namespace CaribbeanPoker.Test
 {
     [Trait("Category", "Hand")]
-    public class HandTest
+    public class HandShould
     {
         private readonly ITestOutputHelper _output;
-        public HandTest(ITestOutputHelper output)
+        public HandShould(ITestOutputHelper output)
         {
             _output = output;
         }
@@ -24,12 +24,20 @@ namespace CaribbeanPoker.Test
         }
 
         [Theory]
-        [MemberData(nameof(HandTestData.TestCombinations), MemberType = typeof(HandTestData))]
-        public void GreaterOperator_TwoHands_ReturnProperOrder(Hand hand1, Hand hand2)
+        [MemberData(nameof(HandTestData.TestPairsHandsFirstGreater), MemberType = typeof(HandTestData))]
+        public void ComparisonOperators_ForTwoHands_ReturnFirstGreater(Hand hand1, Hand hand2)
         {
             Assert.True(hand1 > hand2);
             Assert.True(hand2 < hand1);
             Assert.True(hand1 != hand2);
+        }
+        [Theory]
+        [MemberData(nameof(HandTestData.TestPairsHandsEqual), MemberType = typeof(HandTestData))]
+        public void ComparisonOperators_ForTwoHands_ReturnEqual(Hand hand1, Hand hand2)
+        {
+            Assert.True(hand1 == hand2);
+            Assert.False(hand1 > hand2);
+            Assert.False(hand2 < hand1);
         }
     }
 }
