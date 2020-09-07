@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     class Dealer : IDealer
     {

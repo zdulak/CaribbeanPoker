@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     public class Hand : IComparable<Hand>, IEquatable<Hand>
     {

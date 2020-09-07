@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Reflection;
 using Autofac;
+using CaribbeanPoker.Main;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     class Program
     {
