@@ -1,29 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using CaribbeanPoker.Main;
+using Xunit;
 
 namespace CaribbeanPoker.Test
 {
     class HandTestData
     {
-        public static IEnumerable<object[]> TestCombinations
-        {
-            get
+        public static TheoryData<Card[], HandCombination> TestCombinations =>
+            new TheoryData<Card[], HandCombination>
             {
-                yield return new object[]
-                {
-                    new Card[]
-                    {
-                        new Card(Suit.Clubs, Rank.Two),
-                        new Card(Suit.Diamonds, Rank.Five),
-                        new Card(Suit.Hearts, Rank.Seven),
-                        new Card(Suit.Diamonds, Rank.Ace),
-                        new Card(Suit.Spades, Rank.King)
-                    },
-                    HandCombination.nothing
-                };
-                yield return new object[]
                 {
                     new Card[]
                     {
@@ -34,8 +22,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.King)
                     },
                     HandCombination.royal_flush
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -46,8 +33,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Clubs, Rank.Nine)
                     },
                     HandCombination.straight_flush
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -58,8 +44,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Two)
                     },
                     HandCombination.quads
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -70,8 +55,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Two)
                     },
                     HandCombination.full
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -82,8 +66,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Diamonds, Rank.King)
                     },
                     HandCombination.flush
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -94,8 +77,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Five)
                     },
                     HandCombination.straight
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -106,8 +88,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Two)
                     },
                     HandCombination.triplets
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -118,8 +99,7 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Two)
                     },
                     HandCombination.two_pair
-                };
-                yield return new object[]
+                },
                 {
                     new Card[]
                     {
@@ -130,8 +110,55 @@ namespace CaribbeanPoker.Test
                         new Card(Suit.Spades, Rank.Two)
                     },
                     HandCombination.pair
-                };
+                },
+                {
+                    new Card[]
+                    {
+                        new Card(Suit.Clubs, Rank.Two),
+                        new Card(Suit.Diamonds, Rank.Five),
+                        new Card(Suit.Hearts, Rank.Seven),
+                        new Card(Suit.Diamonds, Rank.Ace),
+                        new Card(Suit.Spades, Rank.King)
+                    },
+                    HandCombination.nothing
+                }
+            };
+    
+
+        public static TheoryData<Hand, Hand> TestPairsHandsFirstGreater
+        {
+            get
+            {
+                var data = new TheoryData<Hand, Hand>();
+                var testCombinations = TestCombinations.ToList();
+                for (int i = 0; i < testCombinations.Count; i += 2)
+                {
+                    var hand1 = new Hand {Cards = (Card[]) testCombinations[i][0]};
+                    var hand2 = new Hand {Cards = (Card[]) testCombinations[i + 1][0]};
+                    data.Add(hand1, hand2);
+                }
+                // Add pair which only differs by the last card.
+                var newHandNothing = new Hand {Cards = (Card[]) testCombinations[^1][0]}; // altered hand without any combination.
+                newHandNothing.Cards[0] = new Card(Suit.Clubs, Rank.Three);
+                data.Add(newHandNothing, new Hand { Cards = (Card[])testCombinations[^1][0] });
+
+                return data;
+            }
+        }
+        public static TheoryData<Hand, Hand> TestPairsHandsEqual
+        {
+            get
+            {
+                var data = new TheoryData<Hand, Hand>();
+                foreach (var t in TestCombinations)
+                {
+                    var hand1 = new Hand { Cards = (Card[])t[0] };
+                    var hand2 = new Hand { Cards = (Card[])t[0] };
+                    data.Add(hand1, hand2);
+                }
+                return data;
             }
         }
     }
 }
+
