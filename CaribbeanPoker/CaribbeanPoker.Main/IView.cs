@@ -1,4 +1,4 @@
-﻿namespace CaribbeanPokerMain
+﻿namespace CaribbeanPoker.Main
 {
     public interface IView
     {

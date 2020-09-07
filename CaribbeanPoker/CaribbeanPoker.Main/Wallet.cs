@@ -1,4 +1,4 @@
-﻿namespace CaribbeanPokerMain
+﻿namespace CaribbeanPoker.Main
 {
     class Wallet : IWallet
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     public class View : IView
     {

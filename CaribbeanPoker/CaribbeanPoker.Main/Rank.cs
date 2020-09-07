@@ -1,6 +1,6 @@
 using System;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     public enum Rank
     {

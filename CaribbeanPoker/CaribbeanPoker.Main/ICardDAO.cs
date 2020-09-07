@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     interface ICardDao : IDependency
     {

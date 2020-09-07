@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     public static class Ante
     {
