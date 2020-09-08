@@ -138,8 +138,10 @@ namespace CaribbeanPoker.Test
                     data.Add(hand1, hand2);
                 }
                 // Add pair which only differs by the last card.
-                var newHandNothing = new Hand {Cards = (Card[]) testCombinations[^1][0]}; // altered hand without any combination.
-                newHandNothing.Cards[0] = new Card(Suit.Clubs, Rank.Three);
+                var newCards = new Card[5];
+                Array.Copy((Card[])testCombinations[^1][0], newCards, 5);
+                newCards[0] = new Card(Suit.Clubs, Rank.Three);
+                var newHandNothing = new Hand {Cards = newCards}; // altered hand without any combination.
                 data.Add(newHandNothing, new Hand { Cards = (Card[])testCombinations[^1][0] });
 
                 return data;
