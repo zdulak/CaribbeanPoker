@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CaribbeanPoker.Main
 {
-    interface IDependency
+    public interface IDependency
     {
     }
 }
