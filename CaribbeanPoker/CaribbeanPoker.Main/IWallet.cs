@@ -1,6 +1,6 @@
 ﻿namespace CaribbeanPoker.Main
 {
-    internal interface IWallet : IDependency
+    public interface IWallet : IDependency
     {
         int Money { get; set; }
         bool IsBroke();

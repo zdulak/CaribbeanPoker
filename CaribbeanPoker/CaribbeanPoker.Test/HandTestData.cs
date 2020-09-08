@@ -7,7 +7,7 @@ using Xunit;
 
 namespace CaribbeanPoker.Test
 {
-    class HandTestData
+    public class HandTestData
     {
         public static TheoryData<Card[], HandCombination> TestCombinations =>
             new TheoryData<Card[], HandCombination>
@@ -137,7 +137,7 @@ namespace CaribbeanPoker.Test
                     var hand2 = new Hand {Cards = (Card[]) testCombinations[i + 1][0]};
                     data.Add(hand1, hand2);
                 }
-                // Add pair which only differs by the last card.
+                // Add pair which only differs by the last card. Needed to fully test CompareByRanks method.
                 var newCards = new Card[5];
                 Array.Copy((Card[])testCombinations[^1][0], newCards, 5);
                 newCards[0] = new Card(Suit.Clubs, Rank.Three);
@@ -161,6 +161,17 @@ namespace CaribbeanPoker.Test
                 return data;
             }
         }
+
+        public static TheoryData<int, bool, bool> TestFlipCardsArguments =>
+            new TheoryData<int, bool, bool>
+            {
+                {5, true, true},
+                {5, false, true},
+                {5, true, false},
+                {5, false, false},
+                {3, true, true}
+            };
+
     }
 }
 
