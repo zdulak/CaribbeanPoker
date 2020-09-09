@@ -11,18 +11,50 @@ namespace CaribbeanPoker.Test
     public class GamblerShould
     {
         [Fact]
-        public void PayAnte_ForProperAnte_ReturnAnte()
+        public void PayAnte_ForProperAnte_ReturnAnteAndDecreaseWalletMoney()
         {
-            var expectedAnte = Ante.PossibleValues[0];
+            //Arrange
+            var expectedAnte = Ante.PossibleValues[2];
+            const int initialMoney = 1000;
+
             var mockController = new Mock<IController>();
             mockController.Setup(c => c.GetAnte()).Returns(expectedAnte);
+
             var mockWallet = new Mock<IWallet>();
             mockWallet.Setup(w => w.IsEnoughForAnte(expectedAnte)).Returns(true);
+            mockWallet.SetupProperty(w => w.Money, initialMoney);
+
             var gambler = new Gambler(mockController.Object, mockWallet.Object, new Hand());
-
+            //Act
             var actualAnte = gambler.PayAnte();
-
+            //Assert
             Assert.Equal(expectedAnte, actualAnte);
+            Assert.Equal(initialMoney - expectedAnte, mockWallet.Object.Money);
+        }
+        [Fact]
+        public void PayAnte_NotProperAnteThenProper_InvokePrintMsgThenReturnProperAnteAndDecreaseWalletMoney()
+        {
+            //Arrange
+            var expectedAnte = Ante.PossibleValues[0];
+            const int initialMoney = 1000;
+
+            var mockController = new Mock<IController>();
+            mockController.SetupSequence(c => c.GetAnte()).Returns(Ante.PossibleValues[3])
+                .Returns(Ante.PossibleValues[0]);
+            mockController.Setup(c => c.View.PrintMsg(It.IsAny<string>()));
+
+            var mockWallet = new Mock<IWallet>();
+            mockWallet.Setup(w => w.IsEnoughForAnte(It.IsNotIn(Ante.PossibleValues[3]))).Returns(true);
+            mockWallet.SetupProperty(w => w.Money, initialMoney);
+
+            var gambler = new Gambler(mockController.Object, mockWallet.Object, new Hand());
+            //Act
+            var actualAnte = gambler.PayAnte();
+            //Assert
+            mockController.Verify(c => c.View.PrintMsg(It.IsAny<string>()), Times.Once,
+                "No message printed");
+            Assert.Equal(expectedAnte, actualAnte);
+            Assert.Equal(initialMoney - expectedAnte, mockWallet.Object.Money);
         }
     }
 }
