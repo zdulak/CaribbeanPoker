@@ -6,6 +6,6 @@
         IController Controller { get; }
         Hand Hand { get; }
         int PayAnte();
-        bool IsJackpot(int ante, int jackpotAnte);
+        bool PayJackpot(int ante, int jackpotAnte, ref int jackpot);
     }
 }

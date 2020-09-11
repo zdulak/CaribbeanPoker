@@ -26,11 +26,7 @@
             {
                 _view.PrintStatus(_gambler.Wallet.Money, _jackpot);
                 int ante = _gambler.PayAnte();
-                bool isJackpot = _gambler.IsJackpot(ante, JackpotAnte);
-                if (isJackpot)
-                {
-                    _jackpot += JackpotAnte;
-                }
+                bool isJackpot = _gambler.PayJackpot(ante, JackpotAnte, ref _jackpot);
                 _gambler.Hand.Cards = _deck.DequeueHand();
                 _gambler.Hand.FlipCards(_gambler.Hand.Cards.Length, sorted: true, true);
                 _dealer.Hand.Cards = _deck.DequeueHand();

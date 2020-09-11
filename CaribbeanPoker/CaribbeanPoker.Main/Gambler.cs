@@ -34,7 +34,7 @@ namespace CaribbeanPoker.Main
             }
             return ante;
         }
-        public bool IsJackpot(int ante, int jackpotAnte)
+        public bool PayJackpot(int ante, int jackpotAnte, ref int jackpot)
         {
             bool isJackpot = false;
             if (Wallet.IsEnoughForJackpot(ante, jackpotAnte))
@@ -43,6 +43,7 @@ namespace CaribbeanPoker.Main
                 if (isJackpot)
                 {
                     Wallet.Money -= jackpotAnte;
+                    jackpot += jackpotAnte;
                 }
             }
             return isJackpot;
