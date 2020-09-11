@@ -1,4 +1,6 @@
-﻿namespace CaribbeanPoker.Main
+﻿using System.Collections.ObjectModel;
+
+namespace CaribbeanPoker.Main
 {
     public interface IView
     {
@@ -6,9 +8,9 @@
         void PrintMsg(string msg);
         void PrintStatus(int money, int jackpot);
 
-        void DisplayBoard(Card[] dealer, Card[] player, Card cardBack , string dealerCombination ="????",
+        void DisplayBoard(ReadOnlyCollection<Card> dealer, ReadOnlyCollection<Card> player, Card cardBack , string dealerCombination ="????",
             string playerCombination="????");
 
-        void DisplayHand(Card[] cards, Card cardBack);
+        void DisplayHand(ReadOnlyCollection<Card> cards, Card cardBack);
     }
 }

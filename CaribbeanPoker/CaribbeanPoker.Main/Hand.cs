@@ -1,28 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace CaribbeanPoker.Main
 {
     public class Hand : IComparable<Hand>, IEquatable<Hand>
     {
-        private Card[] _cards;
+        private ReadOnlyCollection<Card> _cards;
 
-        public Card[] Cards 
+        public ReadOnlyCollection<Card> Cards 
         {
             get => _cards;
             set
             {
+                if (value.Count != 5)
+                {
+                    throw new ArgumentException("Cards collection have an invalid length. Acceptable length is 5.");
+                }
                 _cards = value;
                 // Sort cards first by the size of the groups of identical ranks and then by ranks.
                 // SelectMany only takes list of cards from each group and after that it flattens groups into one sequence.
-                SortedCards = GroupByRank().OrderByDescending(x => x.Count())
+                var tempSortedCards = GroupByRank().OrderByDescending(x => x.Count())
                     .ThenByDescending(x => x.Key).SelectMany(x => x).ToArray();
                 // If we have the lowest straight this method exchanges the Ace for the LowAce.
-                AceExchange();
+                AceExchange(tempSortedCards);
+
+                SortedCards = Array.AsReadOnly(tempSortedCards);
+                HandCombination = ComputeHandCombination();
             }
         }
-        public Card[] SortedCards { get; private set; }
+        public ReadOnlyCollection<Card> SortedCards { get; private set; }
+        public HandCombination HandCombination { get; private set; }
 
         // Method flips the first n cards  
         public void FlipCards(int number, bool sorted, bool faceUp)
@@ -39,8 +48,8 @@ namespace CaribbeanPoker.Main
         }
         public int CompareTo(Hand other)
         {
-            var thisCombination = GetHandCombination();
-            var otherCombination = other.GetHandCombination();
+            var thisCombination = HandCombination;
+            var otherCombination = other.HandCombination;
             return thisCombination != otherCombination ? thisCombination.CompareTo(otherCombination) : CompareByRanks(other);
         }
         public bool Equals(Hand other) => CompareTo(other) == 0;
@@ -58,7 +67,7 @@ namespace CaribbeanPoker.Main
         public static bool operator == (Hand op1, Hand op2) => !(op1 is null) && op1.Equals(op2);
         public static bool operator != (Hand op1, Hand op2) => !(op1 == op2);
         public override int GetHashCode() => SortedCards.Aggregate<Card, int>(1, (x, y) => x.GetHashCode() ^ y.GetHashCode());
-        public HandCombination GetHandCombination()
+        private HandCombination ComputeHandCombination()
         {
             var isStraight = IsStraight();
             var groupsByRank = GroupByRank().ToArray();
@@ -88,19 +97,19 @@ namespace CaribbeanPoker.Main
         private IEnumerable<IGrouping<Rank, Card>> GroupByRank() => Cards.GroupBy(x => x.Rank);
         private bool IsStraight()
         {
-            for (var i = 0; i < SortedCards.Length - 1; ++i)
+            for (var i = 0; i < SortedCards.Count - 1; ++i)
             {
                 if (SortedCards[i+1].Rank + 1 != SortedCards[i].Rank) return false;
             }
             return true;
         }
-        private void AceExchange()
+        private void AceExchange(Card[] cards)
         {
             var lowestStraight = new Rank[] {Rank.Ace, Rank.Five, Rank.Four, Rank.Three, Rank.Two};
-            if (SortedCards.Select(x => x.Rank).SequenceEqual(lowestStraight))
+            if (cards.Select(x => x.Rank).SequenceEqual(lowestStraight))
             {
-                SortedCards[0] = new Card(SortedCards[0].Suit, Rank.LowAce, SortedCards[0].FaceUp, SortedCards[0].Picture);
-                Array.Sort(SortedCards, (x,y) => -x.Rank.CompareTo(y.Rank)); // Sort cards in descending order;
+                cards[0] = new Card(cards[0].Suit, Rank.LowAce, cards[0].FaceUp, cards[0].Picture);
+                Array.Sort(cards, (x,y) => -x.Rank.CompareTo(y.Rank)); // Sort cards in descending order;
             }
         }
         // // Method sorts cards first by ranks and then by suits.

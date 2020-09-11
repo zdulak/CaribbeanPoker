@@ -1,3 +1,5 @@
+using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -13,13 +15,24 @@ namespace CaribbeanPoker.Test
         {
             _output = output;
         }
+
+        [Fact]
+        public void CardsProperty_ForWrongNumberOfCards_ThrowException()
+        {
+            var testCards = Array.AsReadOnly(new Card[] {new Card(Suit.Spades, Rank.Jack),
+                new Card(Suit.Clubs, Rank.King)});
+            var hand = new Hand();
+
+            var ex = Assert.Throws<ArgumentException>(() => hand.Cards = testCards);
+            Assert.Equal("Cards collection have an invalid length. Acceptable length is 5.", ex.Message);
+        }
         [Theory]
         [MemberData(nameof(HandTestData.TestCombinations), MemberType = typeof(HandTestData))]
-        public void GetHandCombination_ForCards_ReturnProperCombination(Card[] cards, HandCombination expectedCombination)
+        public void HandCombination_ForCards_ReturnProperCombination(ReadOnlyCollection<Card> cards, HandCombination expectedCombination)
         {
             var hand = new Hand {Cards = cards};
 
-            var actualCombination = hand.GetHandCombination();
+            var actualCombination = hand.HandCombination;
             //_output.WriteLine(string.Join<Card>(", ", _hand.Cards));
             Assert.Equal(expectedCombination, actualCombination);
         }
@@ -45,7 +58,7 @@ namespace CaribbeanPoker.Test
         [MemberData(nameof(HandTestData.TestFlipCardsArguments), MemberType = typeof(HandTestData))]
         public void FlipCards_ProperlyCardsFlipped(int number, bool sorted, bool faceUp)
         {
-            var hand = new Hand {Cards = (Card[]) HandTestData.TestCombinations.First()[0]};
+            var hand = new Hand {Cards = (ReadOnlyCollection<Card>) HandTestData.TestCombinations.First()[0]};
 
             hand.FlipCards(number, sorted, faceUp);
 

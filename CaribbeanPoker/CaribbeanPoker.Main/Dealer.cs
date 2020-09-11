@@ -10,7 +10,7 @@ namespace CaribbeanPoker.Main
 
         public Dealer(Hand hand) => Hand = hand;
 
-        public bool IsQualify() => Hand.GetHandCombination() > HandCombination.nothing || (Hand.SortedCards[0].Rank == Rank.Ace 
+        public bool IsQualify() => Hand.HandCombination > HandCombination.nothing || (Hand.SortedCards[0].Rank == Rank.Ace 
         && Hand.SortedCards[1].Rank == Rank.King);
     }
 }
