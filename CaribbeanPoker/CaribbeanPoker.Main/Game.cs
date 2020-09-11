@@ -1,4 +1,7 @@
-﻿namespace CaribbeanPoker.Main
+﻿using System;
+using System.Collections.Generic;
+
+namespace CaribbeanPoker.Main
 {
     class Game
     {
@@ -28,24 +31,24 @@
                 int ante = _gambler.PayAnte();
                 bool isJackpot = _gambler.PayJackpot(ante, JackpotAnte, ref _jackpot);
                 _gambler.Hand.Cards = _deck.DequeueHand();
-                _gambler.Hand.FlipCards(_gambler.Hand.Cards.Length, sorted: true, true);
+                _gambler.Hand.FlipCards(_gambler.Hand.Cards.Count, sorted: true, true);
                 _dealer.Hand.Cards = _deck.DequeueHand();
                 _dealer.Hand.FlipCards(1, sorted: false, true); // Reveal the dealer's first card 
                 _view.DisplayBoard(_dealer.Hand.Cards, _gambler.Hand.SortedCards, _deck.CardBack,
-                    playerCombination: _gambler.Hand.GetHandCombination().ToString());
+                    playerCombination: _gambler.Hand.HandCombination.ToString());
                 if (_gambler.Controller.GetAnswer("Do  you raise ?"))
                 {
                     _gambler.Wallet.Money -= 2*ante;
-                    _dealer.Hand.FlipCards(_dealer.Hand.Cards.Length, sorted: true, true);
+                    _dealer.Hand.FlipCards(_dealer.Hand.Cards.Count, sorted: true, true);
                     _view.DisplayBoard(_dealer.Hand.SortedCards, _gambler.Hand.SortedCards, _deck.CardBack,
-                        _dealer.Hand.GetHandCombination().ToString(), _gambler.Hand.GetHandCombination().ToString());
+                        _dealer.Hand.HandCombination.ToString(), _gambler.Hand.HandCombination.ToString());
                     if (_dealer.IsQualify())
                     {
                         if (_gambler.Hand > _dealer.Hand)
                         {
                             _view.PrintMsg("You win!");
                             _gambler.Wallet.Money += 4*ante; // return player money and won dealer ante
-                            _gambler.Wallet.Money += RankMoney(_gambler.Hand.GetHandCombination(), ante, isJackpot); // won bet bonus money
+                            _gambler.Wallet.Money += RankMoney(_gambler.Hand.HandCombination, ante, isJackpot); // won bet bonus money
                         }
                         else if (_dealer.Hand == _gambler.Hand)
                         {
@@ -63,8 +66,8 @@
                         _gambler.Wallet.Money += 4*ante;
                     }
                 }
-                _dealer.Hand.FlipCards(_dealer.Hand.Cards.Length, sorted: false, false);
-                _gambler.Hand.FlipCards(_dealer.Hand.Cards.Length, sorted: false, false);
+                _dealer.Hand.FlipCards(_dealer.Hand.Cards.Count, sorted: false, false);
+                _gambler.Hand.FlipCards(_dealer.Hand.Cards.Count, sorted: false, false);
                 _deck.EnqueueHand(_gambler.Hand.Cards);
                 _deck.EnqueueHand(_dealer.Hand.Cards);
                 _deck.Shuffle();

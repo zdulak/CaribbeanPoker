@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CaribbeanPoker.Main
 {
@@ -29,14 +30,14 @@ namespace CaribbeanPoker.Main
             }
         }
         // Method returns a hand of cards from the beginning of the deck.
-        public Card[] DequeueHand()
+        public ReadOnlyCollection<Card> DequeueHand()
         {
             var hand = _cards.GetRange(0, 5).ToArray();
             _cards.RemoveRange(0, 5);
-            return hand;
+            return Array.AsReadOnly(hand);
         }
         // Method adds a hand of cards to the end of the deck.
-        public void EnqueueHand(Card[] hand) => _cards.AddRange(hand);
+        public void EnqueueHand(ReadOnlyCollection<Card> hand) => _cards.AddRange(hand);
         
     }
 }
