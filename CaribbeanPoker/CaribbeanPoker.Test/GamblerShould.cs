@@ -56,5 +56,30 @@ namespace CaribbeanPoker.Test
             Assert.Equal(expectedAnte, actualAnte);
             Assert.Equal(initialMoney - expectedAnte, mockWallet.Object.Money);
         }
+
+        [Fact]
+        public void PayJackpot_ForProperAnte_ReturnTrueAndIncreaseJackpotAndDecreaseMoney()
+        {
+            const int initialMoney = 1000;
+            const int jackpotAnte = 10;
+            const int initialJackpot = 100;
+            var jackpot = initialJackpot;
+            //Arrange
+            var mockController = new Mock<IController>();
+            mockController.Setup(c => c.GetAnswer(It.IsAny<string>())).Returns(true);
+
+            var mockWallet = new Mock<IWallet>();
+            mockWallet.SetupProperty(w => w.Money, initialMoney);
+            mockWallet.Setup(w => w.IsEnoughForJackpot(Ante.PossibleValues[0], jackpotAnte)).Returns(true);
+
+            var gambler = new Gambler(mockController.Object, mockWallet.Object, new Hand());
+            //Act
+            var isJackpot = gambler.PayJackpot(Ante.PossibleValues[0], jackpotAnte, ref jackpot);
+            //Assert
+            Assert.True(isJackpot);
+            Assert.Equal(initialJackpot + jackpotAnte, jackpot);
+            Assert.Equal(initialMoney - jackpotAnte, mockWallet.Object.Money);
+
+        }
     }
 }
