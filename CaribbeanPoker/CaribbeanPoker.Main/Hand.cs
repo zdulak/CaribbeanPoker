@@ -14,20 +14,22 @@ namespace CaribbeanPoker.Main
             get => _cards;
             set
             {
-                if (value.Count != 5)
+                if (value.Count == 5)
                 {
-                    throw new ArgumentException("Cards collection have an invalid length. Acceptable length is 5.");
-                }
-                _cards = value;
-                // Sort cards first by the size of the groups of identical ranks and then by ranks.
-                // SelectMany only takes list of cards from each group and after that it flattens groups into one sequence.
-                var tempSortedCards = GroupByRank().OrderByDescending(x => x.Count())
-                    .ThenByDescending(x => x.Key).SelectMany(x => x).ToArray();
-                // If we have the lowest straight this method exchanges the Ace for the LowAce.
-                AceExchange(tempSortedCards);
+                    _cards = value;
+                    // Sort cards first by the size of the groups of identical ranks and then by ranks.
+                    // SelectMany only takes list of cards from each group and after that it flattens groups into one sequence.
+                    var tempSortedCards = GroupByRank()
+                        .OrderByDescending(x => x.Count())
+                        .ThenByDescending(x => x.Key)
+                        .SelectMany(x => x)
+                        .ToArray();
+                    // If we have the lowest straight this method exchanges the Ace for the LowAce.
+                    AceExchange(tempSortedCards);
 
-                SortedCards = Array.AsReadOnly(tempSortedCards);
-                HandCombination = ComputeHandCombination();
+                    SortedCards = Array.AsReadOnly(tempSortedCards);
+                    HandCombination = ComputeHandCombination();
+                }
             }
         }
         public ReadOnlyCollection<Card> SortedCards { get; private set; }
@@ -74,14 +76,15 @@ namespace CaribbeanPoker.Main
             var isFlush = SortedCards.All(x => x.Suit == SortedCards.First().Suit);
             var isTriplets = groupsByRank.Any(x => x.Count() == 3);
             var isPair = groupsByRank.Any(x => x.Count() == 2);
+
             if (isFlush && isStraight && SortedCards[0].Rank == Rank.Ace) return HandCombination.royal_flush;
-            if (isFlush && isStraight ) return HandCombination.straight_flush;
-            if (groupsByRank.Any(x => x.Count() == 4)) return HandCombination.quads;
-            if (isTriplets && isPair) return HandCombination.full;
-            if (isFlush) return HandCombination.flush;
-            if (isStraight) return HandCombination.straight;
-            if (isTriplets) return HandCombination.triplets;
-            if (groupsByRank.Where(x => x.Count() == 2).Count() == 2) return HandCombination.two_pair;
+            else if (isFlush && isStraight ) return HandCombination.straight_flush;
+            else if (groupsByRank.Any(x => x.Count() == 4)) return HandCombination.quads;
+            else if (isTriplets && isPair) return HandCombination.full;
+            else if (isFlush) return HandCombination.flush;
+            else if (isStraight) return HandCombination.straight;
+            else if (isTriplets) return HandCombination.triplets;
+            else if (groupsByRank.Where(x => x.Count() == 2).Count() == 2) return HandCombination.two_pair;
             return isPair ? HandCombination.pair : HandCombination.nothing;
         }
         private int CompareByRanks(Hand other)

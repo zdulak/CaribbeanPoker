@@ -9,7 +9,7 @@ namespace CaribbeanPoker.Main
         public Card GetCard(Suit suit, Rank rank)
         {
             string picture;
-            var path = @"../Cards/Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
+            var path = @"Cards/Card_" + suit.ToString() + "_" + rank.ToString() + ".txt";
 
             try
             {
