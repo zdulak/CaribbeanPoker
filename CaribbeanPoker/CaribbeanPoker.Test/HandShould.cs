@@ -17,14 +17,17 @@ namespace CaribbeanPoker.Test
         }
 
         [Fact]
-        public void CardsProperty_ForWrongNumberOfCards_ThrowException()
+        public void CardsProperty_ForWrongNumberOfCards_DoNotAssignNewCards()
         {
             var testCards = Array.AsReadOnly(new Card[] {new Card(Suit.Spades, Rank.Jack),
                 new Card(Suit.Clubs, Rank.King)});
-            var hand = new Hand();
 
-            var ex = Assert.Throws<ArgumentException>(() => hand.Cards = testCards);
-            Assert.Equal("Cards collection have an invalid length. Acceptable length is 5.", ex.Message);
+            var hand = new Hand {Cards = testCards};
+
+            Assert.Null(hand.Cards);
+
+            //var ex = Assert.Throws<ArgumentException>(() => hand.Cards = testCards);
+            //Assert.Equal("Cards collection have an invalid length. Acceptable length is 5.", ex.Message);
         }
         [Theory]
         [MemberData(nameof(HandTestData.TestCombinations), MemberType = typeof(HandTestData))]
