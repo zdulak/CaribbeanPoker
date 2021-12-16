@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
 
     interface IterableText

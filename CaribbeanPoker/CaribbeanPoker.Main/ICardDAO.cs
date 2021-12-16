@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
-    interface ICardDao
+    interface ICardDao : IDependency
     {
         // Method loads a card from a file 
         Card GetCard(Suit suit, Rank rank);

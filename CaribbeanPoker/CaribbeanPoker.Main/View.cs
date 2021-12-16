@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
-    public class View
+    public class View : IView
     {
         public void Clear() => Console.Clear();
         public void PrintMsg(string msg) => Console.WriteLine(msg);
@@ -12,7 +13,7 @@ namespace CaribbeanPokerMain
         {
             Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
-        public void DisplayBoard(Card[] dealer, Card[] player, Card cardBack , string dealerCombination ="????",
+        public void DisplayBoard(ReadOnlyCollection<Card> dealer, ReadOnlyCollection<Card> player, Card cardBack , string dealerCombination ="????",
             string playerCombination="????") 
         {
             Console.WriteLine(new String(' ', 16) + "===  CASINO ROYAL ===" + new String(' ', 16));
@@ -38,10 +39,10 @@ namespace CaribbeanPokerMain
             Console.WriteLine("." + new String('=', 51) + ".");
         }
 
-        public void DisplayHand(Card[] cards, Card cardBack)
+        public void DisplayHand(ReadOnlyCollection<Card> cards, Card cardBack)
         {
-            var picturesIterators = new IEnumerator<string>[cards.Length];
-            for (int i = 0; i < cards.Length; ++i)
+            var picturesIterators = new IEnumerator<string>[cards.Count];
+            for (int i = 0; i < cards.Count; ++i)
             {
                 if (cards[i].FaceUp)
                 {
@@ -56,7 +57,7 @@ namespace CaribbeanPokerMain
             while (iterate)
             {
                 Console.Write("|   ");
-                for (int i = 0; i < cards.Length; ++i)
+                for (int i = 0; i < cards.Count; ++i)
                 {
                     if (!picturesIterators[i].MoveNext()) 
                     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace CaribbeanPokerMain
+namespace CaribbeanPoker.Main
 {
     class CardComparer : IComparer<Card>
     {
