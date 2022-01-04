@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\CaribbeanPokerMain.csproj",
+      "projectUniqueName": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa — develop2\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\CaribbeanPokerMain.csproj",
       "projectName": "CaribbeanPokerMain",
-      "projectPath": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\CaribbeanPokerMain.csproj",
+      "projectPath": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa — develop2\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\CaribbeanPokerMain.csproj",
       "packagesPath": "C:\\Users\\Damian\\.nuget\\packages\\",
-      "outputPath": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\obj\\",
+      "outputPath": "G:\\codecool\\c#_codecool\\battle-of-cards-grupauderzeniowa — develop2\\battle-of-cards-grupauderzeniowa\\CaribbeanPoker\\CaribbeanPokerMain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Damian\\AppData\\Roaming\\NuGet\\NuGet.Config",

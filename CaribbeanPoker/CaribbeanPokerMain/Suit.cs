@@ -2,7 +2,7 @@ using System;
 
 namespace CaribbeanPokerMain
 {
-    enum Suit
+    public enum Suit
     {
         Clubs,
         Diamonds,

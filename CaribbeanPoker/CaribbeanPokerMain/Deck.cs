@@ -3,23 +3,16 @@ using System.Collections.Generic;
 
 namespace CaribbeanPokerMain
 {
-    class Deck: ICardDAO
+    class Deck
     {
         private List<Card> cards;
         private Random random;
         // Constructor creating a shuffled deck.
         public Deck()
         {
+            var cardsDao = new CardsDao("CardsData.txt");
             random = new Random();
-            cards = new List<Card>(52);
-            for (int suit = 0; suit < 4; ++suit)
-            {
-                for (int rank = 1; rank < 14; ++rank)
-                {
-                    // TODO: Replace with GetCard(Suit suit, Rank rank)
-                    cards[rank+suit*rank-1] = new Card((Suit)suit, (Rank)rank);
-                }
-            }
+            cards = cardsDao.GetAllCards();
             Shuffle();
         }
         // Modern Fisher–Yates shuffle algorithm.
@@ -42,10 +35,6 @@ namespace CaribbeanPokerMain
         }
         // Method adds a hand of cards to the end of the deck.
         public void EnqueueHand(Card[] hand) => cards.AddRange(hand);
-        // Method loads a card from a file 
-        public Card GetCard(Suit suit, Rank rank)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

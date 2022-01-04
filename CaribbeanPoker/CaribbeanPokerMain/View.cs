@@ -1,28 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CaribbeanPokerMain
 {
-    class View
-    {
-        public View()
+    public static class View
+    { 
+        public static void PrintStatus(int money, int jackpot)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine($"Your money: {money}.  Current jackpot: {jackpot}.");
         }
-        public void PrintCard(Card card)
+        public static void DisplayBoard(Card[] dealer, Card[] player) 
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void PrintHand(Hand hand)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void PrintTable()
-        {
-            throw new System.NotImplementedException();
+            Console.WriteLine("           ===  CASINO ROYAL ===");
+            Console.WriteLine(".===========================================.");
+            for (int i = 0; i <10; i++)
+            {
+                Console.WriteLine("|                                           |");
+            }
+            Console.WriteLine("*===========================================*");
+            Console.SetCursorPosition(11,2);
+            Console.Write("Caribbean Stud Poker");
+            Console.SetCursorPosition(2,4);
+            Console.Write("Dealer Hand: ");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(dealer[i].Picture);
+            }
+            Console.SetCursorPosition(2,5);
+            Console.Write("--------------------------------------");
+            Console.SetCursorPosition(2,6);
+            Console.Write("Player Hand: ");
+            for (int i = 0; i < 5; i++)
+            {
+                Console.Write(player[i].Picture);
+            }
+            Console.WriteLine();
         }
     }
 }
